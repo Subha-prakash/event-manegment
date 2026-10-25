@@ -1,0 +1,1252 @@
+{
+  "users": [
+    {
+      "id": "usr_demo_01",
+      "name": "Priya Sharma",
+      "email": "priya@eventgenie.ai",
+      "created_at": "2026-09-25T17:08:08.306Z"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt_wedding_01",
+      "user_id": "usr_demo_01",
+      "name": "Aarav & Meera's Royal Palace Wedding",
+      "event_type": "Wedding",
+      "event_date": "2027-01-08",
+      "end_date": "2027-01-10",
+      "location": "Jaipur, Rajasthan",
+      "guest_count": 350,
+      "budget": 1500000,
+      "currency": "INR",
+      "theme": "Royal Rajputana Heritage & Marigold Bliss",
+      "preferences": {
+        "venue_type": "Outdoor & Palace Courtyard",
+        "food_preferences": "Authentic Rajasthani & North Indian Vegetarian & Live Chaat Counter",
+        "cultural_traditions": "Traditional Hindu ceremonies, Sangeet night, Haldi & Phoolon ki Holi",
+        "formality": "High / Regal Traditional",
+        "special_requests": "Heritage lighting, puppet show for guests, eco-friendly floral rangolis"
+      },
+      "plan_data": {
+        "concept_and_theme": "An enchanting blend of Rajputana royal opulence with warm pastel hues, vibrant marigold arches, antique brass lanterns, and traditional folk instrumental melodies.",
+        "decoration_ideas": [
+          "Grand floral entryway with 1,000 fragrant marigold strings and brass diyas.",
+          "Mandap set against an illuminated palace facade with lotus pond reflections.",
+          "Sangeet stage with royal velvet drapes, warm Edison bulb chandeliers, and mirror mosaic backdrops.",
+          "Photo booth designed as a vintage royal jharokha with turbans and umbrellas for guests."
+        ],
+        "venue_requirements": [
+          "Heritage palace or boutique fort with sprawling lawns and minimum 400 capacity.",
+          "Dedicated green rooms for bride and groom with full-length mirrors and AC.",
+          "Ample valet parking space for 120+ vehicles.",
+          "Power backup of at least 125 kVA for heavy stage lighting and sound."
+        ],
+        "food_and_catering": [
+          "Welcome drinks: Rose thandai, kokum sherbet, and fresh coconut water counters.",
+          "Live street food station: Jaipuri pyaaz kachori, mini samosas, and banarasi chaat.",
+          "Main course: Dal Baati Churma, Gatte ki Sabzi, Paneer Lababdar, and Awadhi Biryani.",
+          "Dessert bar: Kesar Jalebi with rabri, hot Malpua, and artisanal Kulfi sticks."
+        ],
+        "entertainment_options": [
+          "Day 1 Sangeet: Live fusion band blending Bollywood retro with Punjabi beats.",
+          "Day 2 Haldi: Traditional Dhol players and Phoolon ki Holi flower cannon.",
+          "Wedding Baraat: Royal brass band with shehnai maestro at the entrance."
+        ],
+        "guest_management": [
+          "Digital RSVP portal with WhatsApp confirmation updates.",
+          "Luggage tags and personalized welcome hampers placed in guest rooms.",
+          "Golf carts for elderly guests to commute smoothly within the palace grounds."
+        ],
+        "vendor_checklist": [
+          "Heritage Palace Venue & Lawn",
+          "Royal Heritage Decorator & Florist",
+          "Gourmet Catering & Live Food Stalls",
+          "Cinematic Photographer & Drone Videographer",
+          "DJ & Folk Fusion Music Band",
+          "Bridal Makeup Artist & Stylist",
+          "Guest Logistics & Luxury Tempo Travelers",
+          "Event Security & Hospitality Hostesses"
+        ],
+        "important_reminders": [
+          "Confirm sound permissions past 10:00 PM with local administration.",
+          "Conduct food tasting session with caterer 45 days prior.",
+          "Finalize room allocation chart for out-of-town guests 3 weeks before arrival."
+        ]
+      },
+      "created_at": "2026-09-30T17:08:08.312Z",
+      "updated_at": "2026-10-25T17:08:08.312Z"
+    },
+    {
+      "id": "evt_fest_02",
+      "user_id": "usr_demo_01",
+      "name": "TechNova Collegiate Hackathon & Summit",
+      "event_type": "College Fest",
+      "event_date": "2026-12-09",
+      "end_date": "2026-12-10",
+      "location": "Bangalore, Karnataka",
+      "guest_count": 220,
+      "budget": 350000,
+      "currency": "INR",
+      "theme": "Cyberpunk Glow & AI Innovation",
+      "preferences": {
+        "venue_type": "Auditorium & Innovation Labs",
+        "food_preferences": "Midnight coffee & pizza, energy snacks, healthy wrap lunches",
+        "cultural_traditions": "Modern Tech Festival",
+        "formality": "Casual Tech Geek",
+        "special_requests": "High-speed 1Gbps dedicated fiber internet, sleeping pod zones"
+      },
+      "plan_data": {
+        "concept_and_theme": "A 24-hour high-octane coding marathon infused with neon cyberpunk aesthetics, interactive tech demos, industry keynote speakers, and gamer lounge relaxation.",
+        "decoration_ideas": [
+          "Neon wireframes and UV reactive signage across hacker zones.",
+          "LED sponsor display wall with live GitHub commits visualization."
+        ],
+        "venue_requirements": [
+          "Main university auditorium for keynotes + 4 computer labs for hacking tracks.",
+          "High-capacity power strips at every team workbench with surge protection."
+        ],
+        "food_and_catering": [
+          "Unlimited 24-hour espresso & cold brew bar.",
+          "Healthy sandwich wraps, bananas, and protein bars during sprint hours.",
+          "Midnight Margherita pizza boxes and warm energy drinks."
+        ],
+        "entertainment_options": [
+          "Stand-up tech comedy set during sponsor break.",
+          "Midnight laser tag battle in the student quad."
+        ],
+        "guest_management": [
+          "NFC badge check-in for registered college student IDs.",
+          "Discord server for live mentor pairing and schedule announcements."
+        ],
+        "vendor_checklist": [
+          "Auditorium Audio/Visual Setup",
+          "High-speed leased line ISP",
+          "Catering & Snack Supplier",
+          "Merchandise T-Shirt & Swag Printer",
+          "Memento & Trophy Fabricator"
+        ],
+        "important_reminders": [
+          "Test campus firewall whitelist for GitHub, Hugging Face, and Gemini API endpoints.",
+          "Distribute emergency first aid kit and on-call nurse info to volunteer leads."
+        ]
+      },
+      "created_at": "2026-10-10T17:08:08.312Z",
+      "updated_at": "2026-10-25T17:08:08.312Z"
+    },
+    {
+      "id": "evt_1792948202886",
+      "user_id": "usr_demo_01",
+      "name": "Rohan's 25th Sunset Beach Birthday Bash",
+      "event_type": "Birthday",
+      "event_date": "2026-11-20",
+      "end_date": "2026-11-20",
+      "location": "Goa, India",
+      "guest_count": 50,
+      "budget": 150000,
+      "currency": "INR",
+      "theme": "Tropical Sunset Glow and Acoustic Beats",
+      "preferences": {
+        "venue_type": "Beachfront Lawn and Cabana Lounge",
+        "food_preferences": "Coastal BBQ, Woodfire Pizza, Fresh Mocktails",
+        "cultural_traditions": "Modern Birthday Party",
+        "formality": "Casual Chic",
+        "special_requests": "Sunset bonfire with marshmallow roasting"
+      },
+      "plan_data": {
+        "event_summary": {
+          "event_name": "Rohan's 25th Sunset Beach Birthday Bash",
+          "event_type": "Birthday",
+          "theme": "Tropical Sunset Glow and Acoustic Beats",
+          "guest_count": 50,
+          "total_budget": 150000,
+          "currency": "INR",
+          "location": "Goa, India",
+          "venue_type": "Beachfront Lawn and Cabana Lounge",
+          "formality": "Casual Chic"
+        },
+        "concept_and_theme": "The concept for \"Rohan's 25th Sunset Beach Birthday Bash\" revolves around Tropical Sunset Glow and Acoustic Beats, harmonizing thoughtful hospitality with aesthetic flair in Goa, India. Designed for 50 guests with a Casual Chic ambiance, every element—from the visual decor to culinary moments—is synchronized to create lasting memories while strictly adhering to your budget of ₹1,50,000.",
+        "decoration_ideas": [
+          "Grand Entrance Feature: Statement welcome arch styled with Tropical Sunset Glow and Acoustic Beats (Add glowing neon palm signs and fairy light canopy) elements, fairy lights, and personalized signage.",
+          "Central Focal Area: Photo-worthy main stage / backdrop incorporating warm illumination and organic textures.",
+          "Table & Ambient Styling: Elegant runner cloths with botanical centerpieces, customized menu cards, and soft ambient up-lights.",
+          "Interactive Photo Corner: Dedicated selfie and family photo zone featuring props, vintage frames, and neon event title."
+        ],
+        "venue_requirements": [
+          "Capacity for at least 57 people to provide comfortable movement and dining flow.",
+          "Dedicated staging area with appropriate power supply for sound, projection, and illumination.",
+          "Adequate climate control (AC/heaters) and clean, well-maintained restroom facilities.",
+          "Convenient parking area or valet facility for approximately 17 vehicles."
+        ],
+        "food_and_catering": [
+          "Welcome Station: Signature refreshing drinks customized to preference (Coastal BBQ, Woodfire Pizza, Fresh Mocktails).",
+          "Appetizers: 4 curated finger foods (2 hot appetizers, 2 fresh bite-sized savories) served during initial mingling.",
+          "Main Course: Well-balanced buffet spread featuring staple delicacies, flavorful mains, freshly baked breads, and salads.",
+          "Dessert Corner: Duo of celebratory desserts including warm seasonal favorites and cold artisanal treats."
+        ],
+        "entertainment_options": [
+          "Curated background acoustics during guest reception to set a pleasant, welcoming tone.",
+          "Engaging interactive segment: Emcee-moderated games, heartfelt toasts, or spotlight trivia.",
+          "High-energy transition to open dance floor or showcase performances powered by a quality sound system."
+        ],
+        "guest_management": [
+          "Digital RSVP tracking to accurately record headcount and dietary restrictions 14 days in advance.",
+          "Welcome registration desk or greeting host to distribute event itineraries and seat guidance.",
+          "Dedicated assistance for senior citizens, young children, or guests with special accessibility needs."
+        ],
+        "vendor_checklist": [
+          "Venue and Banquet Hall",
+          "Catering & Beverage Team",
+          "Decoration and Floral Stylist",
+          "Photographer and Videographer",
+          "Sound, Lighting and DJ / Entertainer",
+          "Event Host / Emcee (Optional)",
+          "Transportation / Shuttle Logistics"
+        ],
+        "budget_breakdown": [
+          {
+            "category": "Venue and accommodation",
+            "estimated_cost": 37500,
+            "reason": "Party hall or banquet lounge rental in Goa, India"
+          },
+          {
+            "category": "Catering and beverages",
+            "estimated_cost": 52500,
+            "reason": "Special gourmet dinner, appetizers, mocktails, and designer celebration cake for 50 guests"
+          },
+          {
+            "category": "Decoration and flowers",
+            "estimated_cost": 27000,
+            "reason": "Balloon arches, customized LED photo neon sign, photo backdrop based on Tropical Sunset Glow and Acoustic Beats"
+          },
+          {
+            "category": "Photography and videography",
+            "estimated_cost": 12000,
+            "reason": "Event candid photographer for 4 hours and edited highlight gallery"
+          },
+          {
+            "category": "Entertainment and music",
+            "estimated_cost": 12000,
+            "reason": "Emcee / party host, interactive parlor games, and party playlist sound setup"
+          },
+          {
+            "category": "Gifts and miscellaneous expenses",
+            "estimated_cost": 9000,
+            "reason": "Return favors and customized gift hampers for attendees"
+          }
+        ],
+        "timeline": [
+          {
+            "task": "Lock venue and finalize booking deposit",
+            "days_before_event": 60,
+            "priority": "High",
+            "description": "Review contracts, venue timing, and sound policy.",
+            "assigned_to": "Lead Planner"
+          },
+          {
+            "task": "Confirm caterer and finalize menu tasting",
+            "days_before_event": 45,
+            "priority": "High",
+            "description": "Verify dietary preferences for Coastal BBQ, Woodfire Pizza, Fresh Mocktails and live counter setup.",
+            "assigned_to": "Catering Lead"
+          },
+          {
+            "task": "Engage decorator and approve 3D design sketches",
+            "days_before_event": 30,
+            "priority": "Medium",
+            "description": "Ensure color scheme mirrors the \"Tropical Sunset Glow and Acoustic Beats\" aesthetic.",
+            "assigned_to": "Decor Coordinator"
+          },
+          {
+            "task": "Book photographer, videographer, and DJ",
+            "days_before_event": 30,
+            "priority": "Medium",
+            "description": "Share shot list, must-have family portraits, and music preference playlist.",
+            "assigned_to": "Lead Planner"
+          },
+          {
+            "task": "Dispatch invitations and open digital RSVP tracking",
+            "days_before_event": 25,
+            "priority": "High",
+            "description": "Track responses for 50 guests to finalize seating and meals.",
+            "assigned_to": "Guest Manager"
+          },
+          {
+            "task": "Finalize guest count and share with caterer",
+            "days_before_event": 10,
+            "priority": "High",
+            "description": "Lock plate count and arrange buffer seating.",
+            "assigned_to": "Catering Lead"
+          },
+          {
+            "task": "Conduct final technical and logistical walkthrough",
+            "days_before_event": 3,
+            "priority": "Medium",
+            "description": "Test microphones, audio cables, lighting power backup, and display screens.",
+            "assigned_to": "Venue Coordinator"
+          },
+          {
+            "task": "Event Day Execution and coordination",
+            "days_before_event": 0,
+            "priority": "High",
+            "description": "Follow chronological run of show, greet guests, and coordinate vendor deliveries.",
+            "assigned_to": "Event Coordinator"
+          }
+        ],
+        "important_reminders": [
+          "Keep digital and physical copies of all vendor contracts and payment receipts handy.",
+          "Assign one trusted point of contact for vendor coordination on event day so hosts can enjoy.",
+          "Check local noise curfew regulations (typically 10:00 PM for outdoor amplification)."
+        ],
+        "personalized_ideas": [
+          {
+            "title": "Signature Photo Backdrop for Rohan's 25th Sunset Beach Birthday Bash",
+            "category": "Decoration",
+            "estimated_cost": 6000,
+            "description": "Create an Instagram-worthy photo zone with an organic arch, glowing neon slogan, and personalized hashtags."
+          },
+          {
+            "title": "Eco-Friendly Welcome Favors",
+            "category": "Return Gifts",
+            "estimated_cost": 4500,
+            "description": "Small potted succulents or artisanal local sweets wrapped in recycled craft paper and twine."
+          },
+          {
+            "title": "Interactive Guest Memory Book",
+            "category": "Guest Experience",
+            "estimated_cost": 2250,
+            "description": "Polaroid instant camera station where guests snap a photo and write personal wishes in a hardbound keepsake album."
+          }
+        ],
+        "assumptions": [
+          "All costs are estimated based on prevailing market rates in Goa, India and assume 50 guests.",
+          "Quotations may vary depending on seasonal peak dates and vendor customization.",
+          "Applicable statutory taxes (GST/VAT) may apply depending on individual vendor invoices."
+        ]
+      },
+      "created_at": "2026-10-25T17:10:02.886Z",
+      "updated_at": "2026-10-25T17:10:03.006Z"
+    },
+    {
+      "id": "evt_1792948479592",
+      "user_id": "usr_demo_01",
+      "name": "holi",
+      "event_type": "Other",
+      "event_date": "2026-12-24",
+      "end_date": "2026-12-28",
+      "location": "Jaipur, Rajasthan",
+      "guest_count": 199,
+      "budget": 800000,
+      "currency": "EUR",
+      "theme": "Royal Rajputana & Warm Marigold Elegance",
+      "preferences": {
+        "venue_type": "Outdoor Palace Lawn & Courtyard",
+        "food_preferences": "North Indian Vegetarian & Live Street Chaat Counters",
+        "cultural_traditions": "Traditional Hindu Ceremonies & Sangeet Night",
+        "formality": "Regal / Formal Traditional",
+        "special_requests": "Fairy lights canopy and eco-friendly floral rangolis"
+      },
+      "plan_data": {
+        "event_summary": {
+          "event_name": "holi",
+          "event_type": "Other",
+          "theme": "Royal Rajputana & Warm Marigold Elegance",
+          "guest_count": 199,
+          "total_budget": 800000,
+          "currency": "EUR",
+          "location": "Jaipur, Rajasthan",
+          "venue_type": "Outdoor Palace Lawn & Courtyard",
+          "formality": "Regal / Formal Traditional"
+        },
+        "concept_and_theme": "The concept for \"holi\" revolves around Royal Rajputana & Warm Marigold Elegance, harmonizing thoughtful hospitality with aesthetic flair in Jaipur, Rajasthan. Designed for 199 guests with a Regal / Formal Traditional ambiance, every element—from the visual decor to culinary moments—is synchronized to create lasting memories while strictly adhering to your budget of EUR 8,00,000.",
+        "decoration_ideas": [
+          "Grand Entrance Feature: Statement welcome arch styled with Royal Rajputana & Warm Marigold Elegance elements, fairy lights, and personalized signage.",
+          "Central Focal Area: Photo-worthy main stage / backdrop incorporating warm illumination and organic textures.",
+          "Table & Ambient Styling: Elegant runner cloths with botanical centerpieces, customized menu cards, and soft ambient up-lights.",
+          "Interactive Photo Corner: Dedicated selfie and family photo zone featuring props, vintage frames, and neon event title."
+        ],
+        "venue_requirements": [
+          "Capacity for at least 229 people to provide comfortable movement and dining flow.",
+          "Dedicated staging area with appropriate power supply for sound, projection, and illumination.",
+          "Adequate climate control (AC/heaters) and clean, well-maintained restroom facilities.",
+          "Convenient parking area or valet facility for approximately 66 vehicles."
+        ],
+        "food_and_catering": [
+          "Welcome Station: Signature refreshing drinks customized to preference (North Indian Vegetarian & Live Street Chaat Counters).",
+          "Appetizers: 4 curated finger foods (2 hot appetizers, 2 fresh bite-sized savories) served during initial mingling.",
+          "Main Course: Well-balanced buffet spread featuring staple delicacies, flavorful mains, freshly baked breads, and salads.",
+          "Dessert Corner: Duo of celebratory desserts including warm seasonal favorites and cold artisanal treats."
+        ],
+        "entertainment_options": [
+          "Curated background acoustics during guest reception to set a pleasant, welcoming tone.",
+          "Engaging interactive segment: Emcee-moderated games, heartfelt toasts, or spotlight trivia.",
+          "High-energy transition to open dance floor or showcase performances powered by a quality sound system."
+        ],
+        "guest_management": [
+          "Digital RSVP tracking to accurately record headcount and dietary restrictions 14 days in advance.",
+          "Welcome registration desk or greeting host to distribute event itineraries and seat guidance.",
+          "Dedicated assistance for senior citizens, young children, or guests with special accessibility needs."
+        ],
+        "vendor_checklist": [
+          "Venue and Banquet Hall",
+          "Catering & Beverage Team",
+          "Decoration and Floral Stylist",
+          "Photographer and Videographer",
+          "Sound, Lighting and DJ / Entertainer",
+          "Event Host / Emcee (Optional)",
+          "Transportation / Shuttle Logistics"
+        ],
+        "budget_breakdown": [
+          {
+            "category": "Venue and accommodation",
+            "estimated_cost": 280000,
+            "reason": "Conference hall with AV setup, projector, and breakout rooms in Jaipur, Rajasthan"
+          },
+          {
+            "category": "Catering and beverages",
+            "estimated_cost": 240000,
+            "reason": "Executive buffet lunch, hi-tea breaks, and networking mocktails for 199 delegates"
+          },
+          {
+            "category": "Equipment and lighting",
+            "estimated_cost": 120000,
+            "reason": "Podium mics, synchronized audio-video recording, and live-streaming gear"
+          },
+          {
+            "category": "Invitations and stationery",
+            "estimated_cost": 64000,
+            "reason": "Lanyards, RFID/QR registration badges, notebooks, and digital presentation handouts"
+          },
+          {
+            "category": "Emergency contingency fund",
+            "estimated_cost": 96000,
+            "reason": "Unforeseen speaker travel accommodation and AV technician standby"
+          }
+        ],
+        "timeline": [
+          {
+            "task": "Lock venue and finalize booking deposit",
+            "days_before_event": 60,
+            "priority": "High",
+            "description": "Review contracts, venue timing, and sound policy.",
+            "assigned_to": "Lead Planner"
+          },
+          {
+            "task": "Confirm caterer and finalize menu tasting",
+            "days_before_event": 45,
+            "priority": "High",
+            "description": "Verify dietary preferences for North Indian Vegetarian & Live Street Chaat Counters and live counter setup.",
+            "assigned_to": "Catering Lead"
+          },
+          {
+            "task": "Engage decorator and approve 3D design sketches",
+            "days_before_event": 30,
+            "priority": "Medium",
+            "description": "Ensure color scheme mirrors the \"Royal Rajputana & Warm Marigold Elegance\" aesthetic.",
+            "assigned_to": "Decor Coordinator"
+          },
+          {
+            "task": "Book photographer, videographer, and DJ",
+            "days_before_event": 30,
+            "priority": "Medium",
+            "description": "Share shot list, must-have family portraits, and music preference playlist.",
+            "assigned_to": "Lead Planner"
+          },
+          {
+            "task": "Dispatch invitations and open digital RSVP tracking",
+            "days_before_event": 25,
+            "priority": "High",
+            "description": "Track responses for 199 guests to finalize seating and meals.",
+            "assigned_to": "Guest Manager"
+          },
+          {
+            "task": "Finalize guest count and share with caterer",
+            "days_before_event": 10,
+            "priority": "High",
+            "description": "Lock plate count and arrange buffer seating.",
+            "assigned_to": "Catering Lead"
+          },
+          {
+            "task": "Conduct final technical and logistical walkthrough",
+            "days_before_event": 3,
+            "priority": "Medium",
+            "description": "Test microphones, audio cables, lighting power backup, and display screens.",
+            "assigned_to": "Venue Coordinator"
+          },
+          {
+            "task": "Event Day Execution and coordination",
+            "days_before_event": 0,
+            "priority": "High",
+            "description": "Follow chronological run of show, greet guests, and coordinate vendor deliveries.",
+            "assigned_to": "Event Coordinator"
+          }
+        ],
+        "important_reminders": [
+          "Keep digital and physical copies of all vendor contracts and payment receipts handy.",
+          "Assign one trusted point of contact for vendor coordination on event day so hosts can enjoy.",
+          "Check local noise curfew regulations (typically 10:00 PM for outdoor amplification)."
+        ],
+        "personalized_ideas": [
+          {
+            "title": "Signature Photo Backdrop for holi",
+            "category": "Decoration",
+            "estimated_cost": 32000,
+            "description": "Create an Instagram-worthy photo zone with an organic arch, glowing neon slogan, and personalized hashtags."
+          },
+          {
+            "title": "Eco-Friendly Welcome Favors",
+            "category": "Return Gifts",
+            "estimated_cost": 24000,
+            "description": "Small potted succulents or artisanal local sweets wrapped in recycled craft paper and twine."
+          },
+          {
+            "title": "Interactive Guest Memory Book",
+            "category": "Guest Experience",
+            "estimated_cost": 12000,
+            "description": "Polaroid instant camera station where guests snap a photo and write personal wishes in a hardbound keepsake album."
+          }
+        ],
+        "assumptions": [
+          "All costs are estimated based on prevailing market rates in Jaipur, Rajasthan and assume 199 guests.",
+          "Quotations may vary depending on seasonal peak dates and vendor customization.",
+          "Applicable statutory taxes (GST/VAT) may apply depending on individual vendor invoices."
+        ]
+      },
+      "created_at": "2026-10-25T17:14:39.592Z",
+      "updated_at": "2026-10-25T17:14:39.592Z"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "exp_01",
+      "event_id": "evt_wedding_01",
+      "category": "Venue and accommodation",
+      "description": "Palace Courtyard & Heritage Lawn Rental (3 Days)",
+      "estimated_amount": 500000,
+      "quoted_amount": 480000,
+      "actual_amount": 480000,
+      "payment_status": "Partially Paid",
+      "due_date": "2026-12-24",
+      "notes": "Advance 2.5L paid. Balance due on arrival."
+    },
+    {
+      "id": "exp_02",
+      "event_id": "evt_wedding_01",
+      "category": "Catering and beverages",
+      "description": "Gourmet Royal Catering & Live Counters (350 Guests)",
+      "estimated_amount": 420000,
+      "quoted_amount": 400000,
+      "actual_amount": 400000,
+      "payment_status": "Partially Paid",
+      "due_date": "2027-01-03",
+      "notes": "Menu finalized. 50% advance confirmed."
+    },
+    {
+      "id": "exp_03",
+      "event_id": "evt_wedding_01",
+      "category": "Decoration and flowers",
+      "description": "Marigold Arches, Mandap Florals, Fairylights & Sangeet Stage",
+      "estimated_amount": 250000,
+      "quoted_amount": 230000,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-12-29",
+      "notes": "Negotiating inclusion of vintage jharokha photobooth."
+    },
+    {
+      "id": "exp_04",
+      "event_id": "evt_wedding_01",
+      "category": "Photography and videography",
+      "description": "Cinematic 4K Wedding Film, Teaser & Drone Coverage",
+      "estimated_amount": 150000,
+      "quoted_amount": 140000,
+      "actual_amount": 140000,
+      "payment_status": "Paid",
+      "due_date": "2026-10-20",
+      "notes": "Full payment completed. Contract signed."
+    },
+    {
+      "id": "exp_05",
+      "event_id": "evt_wedding_01",
+      "category": "Entertainment and music",
+      "description": "Sangeet DJ, Fusion Band & Traditional Shehnai Players",
+      "estimated_amount": 80000,
+      "quoted_amount": 75000,
+      "actual_amount": 35000,
+      "payment_status": "Partially Paid",
+      "due_date": "2027-01-05",
+      "notes": "Advance 35k transferred."
+    },
+    {
+      "id": "exp_06",
+      "event_id": "evt_wedding_01",
+      "category": "Emergency contingency fund",
+      "description": "Buffer fund for weather cover and last-minute requests",
+      "estimated_amount": 100000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2027-01-08",
+      "notes": "Held in reserve bank account."
+    },
+    {
+      "id": "exp_1792948202898_8cwt",
+      "event_id": "evt_1792948202886",
+      "category": "Venue and accommodation",
+      "description": "Party hall or banquet lounge rental in Goa, India",
+      "estimated_amount": 37500,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-11-20",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948202900_q15c",
+      "event_id": "evt_1792948202886",
+      "category": "Catering and beverages",
+      "description": "Special gourmet dinner, appetizers, mocktails, and designer celebration cake for 50 guests",
+      "estimated_amount": 52500,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-11-20",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948202902_vw03",
+      "event_id": "evt_1792948202886",
+      "category": "Decoration and flowers",
+      "description": "Balloon arches, customized LED photo neon sign, photo backdrop based on Tropical Sunset Glow and Acoustic Beats",
+      "estimated_amount": 27000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-11-20",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948202904_wn56",
+      "event_id": "evt_1792948202886",
+      "category": "Photography and videography",
+      "description": "Event candid photographer for 4 hours and edited highlight gallery",
+      "estimated_amount": 12000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-11-20",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948202906_l0ch",
+      "event_id": "evt_1792948202886",
+      "category": "Entertainment and music",
+      "description": "Emcee / party host, interactive parlor games, and party playlist sound setup",
+      "estimated_amount": 12000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-11-20",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948202908_lfsm",
+      "event_id": "evt_1792948202886",
+      "category": "Gifts and miscellaneous expenses",
+      "description": "Return favors and customized gift hampers for attendees",
+      "estimated_amount": 9000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-11-20",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948479594_p5i1",
+      "event_id": "evt_1792948479592",
+      "category": "Venue and accommodation",
+      "description": "Conference hall with AV setup, projector, and breakout rooms in Jaipur, Rajasthan",
+      "estimated_amount": 280000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-12-24",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948479596_hakl",
+      "event_id": "evt_1792948479592",
+      "category": "Catering and beverages",
+      "description": "Executive buffet lunch, hi-tea breaks, and networking mocktails for 199 delegates",
+      "estimated_amount": 240000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-12-24",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948479599_yqm1",
+      "event_id": "evt_1792948479592",
+      "category": "Equipment and lighting",
+      "description": "Podium mics, synchronized audio-video recording, and live-streaming gear",
+      "estimated_amount": 120000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-12-24",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948479601_wv93",
+      "event_id": "evt_1792948479592",
+      "category": "Invitations and stationery",
+      "description": "Lanyards, RFID/QR registration badges, notebooks, and digital presentation handouts",
+      "estimated_amount": 64000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-12-24",
+      "notes": "Generated by EventGenie AI"
+    },
+    {
+      "id": "exp_1792948479602_ettn",
+      "event_id": "evt_1792948479592",
+      "category": "Emergency contingency fund",
+      "description": "Unforeseen speaker travel accommodation and AV technician standby",
+      "estimated_amount": 96000,
+      "quoted_amount": 0,
+      "actual_amount": 0,
+      "payment_status": "Pending",
+      "due_date": "2026-12-24",
+      "notes": "Generated by EventGenie AI"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "tsk_01",
+      "event_id": "evt_wedding_01",
+      "title": "Confirm Palace Venue Booking & Sign Agreement",
+      "description": "Verify lawn usage hours, sound curfew policies, and security deposits.",
+      "start_date": "2026-10-05",
+      "due_date": "2026-10-15",
+      "priority": "High",
+      "status": "Completed",
+      "assigned_to": "Aarav (Groom)",
+      "notes": "Agreement executed and scanned copy saved."
+    },
+    {
+      "id": "tsk_02",
+      "event_id": "evt_wedding_01",
+      "title": "Finalize Royal Catering Menu & Tasting Session",
+      "description": "Sample Dal Baati Churma, live Chaat spices, and Kulfi varieties.",
+      "start_date": "2026-10-20",
+      "due_date": "2026-11-04",
+      "priority": "High",
+      "status": "In Progress",
+      "assigned_to": "Meera (Bride)",
+      "notes": "Tasting scheduled for this Saturday at 2:00 PM."
+    },
+    {
+      "id": "tsk_03",
+      "event_id": "evt_wedding_01",
+      "title": "Send Digital Save-the-Date Cards via WhatsApp",
+      "description": "Circulate digital itinerary and hotel room booking links to outstation guests.",
+      "start_date": "2026-10-30",
+      "due_date": "2026-11-09",
+      "priority": "Medium",
+      "status": "Not Started",
+      "assigned_to": "Priya Sharma",
+      "notes": "Card design ready. Awaiting phone number list."
+    },
+    {
+      "id": "tsk_04",
+      "event_id": "evt_wedding_01",
+      "title": "Stage & Mandap Decor Prototype Review",
+      "description": "Inspect 3D render of the flower arch and Rajasthani mirror work.",
+      "start_date": "2026-11-06",
+      "due_date": "2026-11-19",
+      "priority": "Medium",
+      "status": "Not Started",
+      "assigned_to": "Meera & Decorator",
+      "notes": "Check if lotus lights can be illuminated with warm LEDs."
+    },
+    {
+      "id": "tsk_05",
+      "event_id": "evt_wedding_01",
+      "title": "Coordinate Airport Shuttle Schedule for Relatives",
+      "description": "Group arriving flights at Jaipur International Airport into 4 shuttle runs.",
+      "start_date": "2026-12-09",
+      "due_date": "2026-12-24",
+      "priority": "Low",
+      "status": "Not Started",
+      "assigned_to": "Rohan (Cousin)",
+      "notes": "Contact tempo traveler vendor once RSVPs are locked."
+    },
+    {
+      "id": "tsk_1792948202927_8u98",
+      "event_id": "evt_1792948202886",
+      "title": "Lock venue and finalize booking deposit",
+      "description": "Review contracts, venue timing, and sound policy.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-09-21",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Lead Planner",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948202929_qea4",
+      "event_id": "evt_1792948202886",
+      "title": "Confirm caterer and finalize menu tasting",
+      "description": "Verify dietary preferences for Coastal BBQ, Woodfire Pizza, Fresh Mocktails and live counter setup.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-10-06",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Catering Lead",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948202934_tk5s",
+      "event_id": "evt_1792948202886",
+      "title": "Engage decorator and approve 3D design sketches",
+      "description": "Ensure color scheme mirrors the \"Tropical Sunset Glow and Acoustic Beats\" aesthetic.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-10-21",
+      "priority": "Medium",
+      "status": "Not Started",
+      "assigned_to": "Decor Coordinator",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948202935_8ttr",
+      "event_id": "evt_1792948202886",
+      "title": "Book photographer, videographer, and DJ",
+      "description": "Share shot list, must-have family portraits, and music preference playlist.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-10-21",
+      "priority": "Medium",
+      "status": "Not Started",
+      "assigned_to": "Lead Planner",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948202943_rcqw",
+      "event_id": "evt_1792948202886",
+      "title": "Dispatch invitations and open digital RSVP tracking",
+      "description": "Track responses for 50 guests to finalize seating and meals.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-10-26",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Guest Manager",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948202953_xwxw",
+      "event_id": "evt_1792948202886",
+      "title": "Finalize guest count and share with caterer",
+      "description": "Lock plate count and arrange buffer seating.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-11-10",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Catering Lead",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948202955_1qku",
+      "event_id": "evt_1792948202886",
+      "title": "Conduct final technical and logistical walkthrough",
+      "description": "Test microphones, audio cables, lighting power backup, and display screens.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-11-17",
+      "priority": "Medium",
+      "status": "Not Started",
+      "assigned_to": "Venue Coordinator",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948202964_su4c",
+      "event_id": "evt_1792948202886",
+      "title": "Event Day Execution and coordination",
+      "description": "Follow chronological run of show, greet guests, and coordinate vendor deliveries.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-11-20",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Event Coordinator",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948479604_us9w",
+      "event_id": "evt_1792948479592",
+      "title": "Lock venue and finalize booking deposit",
+      "description": "Review contracts, venue timing, and sound policy.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-10-25",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Lead Planner",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948479607_zqku",
+      "event_id": "evt_1792948479592",
+      "title": "Confirm caterer and finalize menu tasting",
+      "description": "Verify dietary preferences for North Indian Vegetarian & Live Street Chaat Counters and live counter setup.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-11-09",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Catering Lead",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948479608_i691",
+      "event_id": "evt_1792948479592",
+      "title": "Engage decorator and approve 3D design sketches",
+      "description": "Ensure color scheme mirrors the \"Royal Rajputana & Warm Marigold Elegance\" aesthetic.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-11-24",
+      "priority": "Medium",
+      "status": "Not Started",
+      "assigned_to": "Decor Coordinator",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948479610_7qpn",
+      "event_id": "evt_1792948479592",
+      "title": "Book photographer, videographer, and DJ",
+      "description": "Share shot list, must-have family portraits, and music preference playlist.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-11-24",
+      "priority": "Medium",
+      "status": "Not Started",
+      "assigned_to": "Lead Planner",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948479611_ak2t",
+      "event_id": "evt_1792948479592",
+      "title": "Dispatch invitations and open digital RSVP tracking",
+      "description": "Track responses for 199 guests to finalize seating and meals.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-11-29",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Guest Manager",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948479613_i0y7",
+      "event_id": "evt_1792948479592",
+      "title": "Finalize guest count and share with caterer",
+      "description": "Lock plate count and arrange buffer seating.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-12-14",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Catering Lead",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948479616_18rd",
+      "event_id": "evt_1792948479592",
+      "title": "Conduct final technical and logistical walkthrough",
+      "description": "Test microphones, audio cables, lighting power backup, and display screens.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-12-21",
+      "priority": "Medium",
+      "status": "Not Started",
+      "assigned_to": "Venue Coordinator",
+      "notes": ""
+    },
+    {
+      "id": "tsk_1792948479617_1cfj",
+      "event_id": "evt_1792948479592",
+      "title": "Event Day Execution and coordination",
+      "description": "Follow chronological run of show, greet guests, and coordinate vendor deliveries.",
+      "start_date": "2026-10-25",
+      "due_date": "2026-12-24",
+      "priority": "High",
+      "status": "Not Started",
+      "assigned_to": "Event Coordinator",
+      "notes": ""
+    }
+  ],
+  "vendors": [
+    {
+      "id": "vnd_01",
+      "event_id": "evt_wedding_01",
+      "name": "Rajvilas Heritage Palace Grounds",
+      "category": "Venues and accommodation",
+      "contact_details": "+91 98290 11223 | events@rajvilaspalace.com",
+      "location": "Amer Road, Jaipur",
+      "quoted_price": 500000,
+      "agreed_price": 480000,
+      "advance_paid": 250000,
+      "booking_status": "Confirmed",
+      "rating": 5,
+      "notes": "Superb courtyard setting. Generator backup and 10 deluxe rooms included."
+    },
+    {
+      "id": "vnd_02",
+      "event_id": "evt_wedding_01",
+      "name": "Shahi Dawat Caterers & Hospitality",
+      "category": "Catering and beverages",
+      "contact_details": "+91 94140 44556 | info@shahidawat.in",
+      "location": "C-Scheme, Jaipur",
+      "quoted_price": 420000,
+      "agreed_price": 400000,
+      "advance_paid": 200000,
+      "booking_status": "Confirmed",
+      "rating": 5,
+      "notes": "Specializes in traditional Marwari and Nawabi cuisine with 12 live stalls."
+    },
+    {
+      "id": "vnd_03",
+      "event_id": "evt_wedding_01",
+      "name": "Gulmohar Floral & Event Stylists",
+      "category": "Decoration and flowers",
+      "contact_details": "+91 98281 77889 | contact@gulmohardecor.com",
+      "location": "Malviya Nagar, Jaipur",
+      "quoted_price": 260000,
+      "agreed_price": 230000,
+      "advance_paid": 50000,
+      "booking_status": "Booked",
+      "rating": 4,
+      "notes": "Includes fresh flowers direct from Pushkar mandi. Mandap sketch approved."
+    },
+    {
+      "id": "vnd_04",
+      "event_id": "evt_wedding_01",
+      "name": "Memories In Motion Films",
+      "category": "Photography and videography",
+      "contact_details": "+91 99280 99001 | hello@memoriesinmotion.in",
+      "location": "Vaishali Nagar, Jaipur",
+      "quoted_price": 150000,
+      "agreed_price": 140000,
+      "advance_paid": 140000,
+      "booking_status": "Confirmed",
+      "rating": 5,
+      "notes": "Package includes 2 traditional photographers, 2 cinematic film videographers, and 1 drone operator."
+    },
+    {
+      "id": "vnd_05",
+      "event_id": "evt_wedding_01",
+      "name": "DJ Rohit & Rajasthani Folk Troopers",
+      "category": "Entertainment and music",
+      "contact_details": "+91 97840 55667 | djrohitjaipur@gmail.com",
+      "location": "Tonk Road, Jaipur",
+      "quoted_price": 85000,
+      "agreed_price": 75000,
+      "advance_paid": 35000,
+      "booking_status": "Booked",
+      "rating": 4,
+      "notes": "Will play Bollywood Sangeet tracks followed by traditional Kalbelia and Ghoomar performance."
+    }
+  ],
+  "guests": [
+    {
+      "id": "gst_01",
+      "event_id": "evt_wedding_01",
+      "name": "Rajesh & Sunita Singhania",
+      "contact_details": "+91 98111 22334 | rajesh@singhania.com",
+      "group_name": "Family",
+      "invitation_status": "Sent",
+      "rsvp_status": "Accepted",
+      "plus_one_count": 2,
+      "dietary_preferences": "Strict Vegetarian, Jain food for Sunita"
+    },
+    {
+      "id": "gst_02",
+      "event_id": "evt_wedding_01",
+      "name": "Vikramaditya Rathore",
+      "contact_details": "+91 99281 33445 | vikram.rathore@outlook.com",
+      "group_name": "VIP",
+      "invitation_status": "Sent",
+      "rsvp_status": "Accepted",
+      "plus_one_count": 1,
+      "dietary_preferences": "Regular North Indian"
+    },
+    {
+      "id": "gst_03",
+      "event_id": "evt_wedding_01",
+      "name": "Ananya Deshmukh",
+      "contact_details": "+91 98200 44556 | ananya.d@gmail.com",
+      "group_name": "Friends",
+      "invitation_status": "Sent",
+      "rsvp_status": "Accepted",
+      "plus_one_count": 0,
+      "dietary_preferences": "Vegan, nut allergy"
+    },
+    {
+      "id": "gst_04",
+      "event_id": "evt_wedding_01",
+      "name": "Karan Johar Verma & Family",
+      "contact_details": "+91 98450 66778 | kjverma@corp.in",
+      "group_name": "Colleagues",
+      "invitation_status": "Sent",
+      "rsvp_status": "Pending",
+      "plus_one_count": 1,
+      "dietary_preferences": "Vegetarian"
+    },
+    {
+      "id": "gst_05",
+      "event_id": "evt_wedding_01",
+      "name": "Dr. Alok Nath Mukherjee",
+      "contact_details": "+91 94330 11223 | mukherjee.alok@med.edu",
+      "group_name": "Family",
+      "invitation_status": "Draft",
+      "rsvp_status": "Pending",
+      "plus_one_count": 1,
+      "dietary_preferences": "Diabetic friendly desserts"
+    },
+    {
+      "id": "gst_06",
+      "event_id": "evt_wedding_01",
+      "name": "Siddharth Malhotra",
+      "contact_details": "+91 98190 77889 | sid.malhotra@tech.io",
+      "group_name": "Friends",
+      "invitation_status": "Sent",
+      "rsvp_status": "Declined",
+      "plus_one_count": 0,
+      "dietary_preferences": "None (Unable to travel due to work)"
+    }
+  ],
+  "saved_ideas": [
+    {
+      "id": "ida_01",
+      "event_id": "evt_wedding_01",
+      "user_id": "usr_demo_01",
+      "category": "Return Gifts",
+      "title": "Artisanal Blue Pottery Jars filled with Kashmiri Saffron Honey",
+      "description": "Support local Jaipur craft artisans by gifting authentic blue pottery ceramic jars filled with organic mountain honey and wrapped in jute ribbon.",
+      "estimated_cost": 350,
+      "created_at": "2026-10-15T17:08:08.312Z"
+    },
+    {
+      "id": "ida_02",
+      "event_id": "evt_wedding_01",
+      "user_id": "usr_demo_01",
+      "category": "Eco-friendly Celebration",
+      "title": "Plantable Seed Paper Wedding Invitations",
+      "description": "Biodegradable invitation cards embedded with marigold and basil seeds that blossom into plants when buried in soil.",
+      "estimated_cost": 85,
+      "created_at": "2026-10-17T17:08:08.312Z"
+    },
+    {
+      "id": "ida_03",
+      "event_id": "evt_wedding_01",
+      "user_id": "usr_demo_01",
+      "category": "Games & Activities",
+      "title": "Interactive Sangeet Antakshari & Family Trivia",
+      "description": "A customized buzzer game pitting Bride's family vs Groom's family with hilarious childhood trivia and retro 90s songs.",
+      "estimated_cost": 5000,
+      "created_at": "2026-10-20T17:08:08.312Z"
+    },
+    {
+      "id": "ida_1792948202972_op16",
+      "event_id": "evt_1792948202886",
+      "user_id": "usr_demo_01",
+      "category": "Decoration",
+      "title": "Signature Photo Backdrop for Rohan's 25th Sunset Beach Birthday Bash",
+      "description": "Create an Instagram-worthy photo zone with an organic arch, glowing neon slogan, and personalized hashtags.",
+      "estimated_cost": 6000,
+      "created_at": "2026-10-25T17:10:02.972Z"
+    },
+    {
+      "id": "ida_1792948202973_6yex",
+      "event_id": "evt_1792948202886",
+      "user_id": "usr_demo_01",
+      "category": "Return Gifts",
+      "title": "Eco-Friendly Welcome Favors",
+      "description": "Small potted succulents or artisanal local sweets wrapped in recycled craft paper and twine.",
+      "estimated_cost": 4500,
+      "created_at": "2026-10-25T17:10:02.973Z"
+    },
+    {
+      "id": "ida_1792948202981_0vqm",
+      "event_id": "evt_1792948202886",
+      "user_id": "usr_demo_01",
+      "category": "Guest Experience",
+      "title": "Interactive Guest Memory Book",
+      "description": "Polaroid instant camera station where guests snap a photo and write personal wishes in a hardbound keepsake album.",
+      "estimated_cost": 2250,
+      "created_at": "2026-10-25T17:10:02.981Z"
+    },
+    {
+      "id": "ida_1792948479618_7hgp",
+      "event_id": "evt_1792948479592",
+      "user_id": "usr_demo_01",
+      "category": "Decoration",
+      "title": "Signature Photo Backdrop for holi",
+      "description": "Create an Instagram-worthy photo zone with an organic arch, glowing neon slogan, and personalized hashtags.",
+      "estimated_cost": 32000,
+      "created_at": "2026-10-25T17:14:39.618Z"
+    },
+    {
+      "id": "ida_1792948479621_qb4m",
+      "event_id": "evt_1792948479592",
+      "user_id": "usr_demo_01",
+      "category": "Return Gifts",
+      "title": "Eco-Friendly Welcome Favors",
+      "description": "Small potted succulents or artisanal local sweets wrapped in recycled craft paper and twine.",
+      "estimated_cost": 24000,
+      "created_at": "2026-10-25T17:14:39.621Z"
+    },
+    {
+      "id": "ida_1792948479622_vs6h",
+      "event_id": "evt_1792948479592",
+      "user_id": "usr_demo_01",
+      "category": "Guest Experience",
+      "title": "Interactive Guest Memory Book",
+      "description": "Polaroid instant camera station where guests snap a photo and write personal wishes in a hardbound keepsake album.",
+      "estimated_cost": 12000,
+      "created_at": "2026-10-25T17:14:39.622Z"
+    }
+  ],
+  "ai_conversations": [
+    {
+      "id": "msg_01",
+      "user_id": "usr_demo_01",
+      "event_id": "evt_wedding_01",
+      "role": "assistant",
+      "message": "Namaste Priya! I am your EventGenie AI assistant. I've analyzed your wedding in Jaipur with 350 guests and a ₹15,00,000 budget. Your venue and caterers are already confirmed, keeping you comfortably on track! How can I assist you today? We could optimize decoration costs, design invitation wording, or plan the Haldi timeline.",
+      "created_at": "2026-10-23T17:08:08.312Z"
+    },
+    {
+      "id": "msg_1792948202987_cmi3",
+      "user_id": "usr_demo_01",
+      "event_id": "evt_1792948202886",
+      "role": "assistant",
+      "message": "Congratulations on creating \"Rohan's 25th Sunset Beach Birthday Bash\"! I've formulated a complete master plan with budget allocations, a 90-day timeline, and vendor checklists. How can I help fine-tune your preparations today?",
+      "created_at": "2026-10-25T17:10:02.987Z"
+    },
+    {
+      "id": "msg_1792948203026_wfad",
+      "user_id": "usr_demo_01",
+      "event_id": "evt_1792948202886",
+      "role": "user",
+      "message": "Reduce my decoration costs by 20% and suggest alternatives",
+      "created_at": "2026-10-25T17:10:03.026Z"
+    },
+    {
+      "id": "msg_1792948203044_yj2m",
+      "user_id": "usr_demo_01",
+      "event_id": "evt_1792948202886",
+      "role": "assistant",
+      "message": "To reduce your decoration expenses by ~20% without diminishing visual charm:\n1. **Focus on Focal Points**: Concentrate floral styling on the entrance arch and main stage backdrop, replacing tabletop florals with brass/glass lanterns and fairy lights (saves ~25-30% on floral procurement).\n2. **Seasonal & Local Blooms**: Replace exotic imported flowers with vibrant local marigolds, tube-roses (rajnigandha), and jasmine which cost a fraction of orchids.\n3. **Warm Ambient Lighting**: Warm Edison bulbs and LED uplighters create a royal, opulent mood across large areas at much lower cost than physical installations.\n\nEstimated potential savings: **₹30,000**. Would you like me to update your budget category estimates accordingly?",
+      "created_at": "2026-10-25T17:10:03.044Z"
+    },
+    {
+      "id": "msg_1792948479624_ipq5",
+      "user_id": "usr_demo_01",
+      "event_id": "evt_1792948479592",
+      "role": "assistant",
+      "message": "Congratulations on creating \"holi\"! I've formulated a complete master plan with budget allocations, a 90-day timeline, and vendor checklists. How can I help fine-tune your preparations today?",
+      "created_at": "2026-10-25T17:14:39.624Z"
+    }
+  ]
+}
