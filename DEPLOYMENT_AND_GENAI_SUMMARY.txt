@@ -1,0 +1,160 @@
+================================================================================
+EVENTGENIE AI — DEPLOYMENT UPDATES & GEN AI UTILIZATION REPORT
+================================================================================
+Project Title: EventGenie AI — GenAI-Powered Event Planning Assistant
+Repository:    https://github.com/Subha-prakash/event-manegment
+Branch:        main
+================================================================================
+
+1. CHANGES AND UPDATES MADE IN THE DEPLOYED VERSION
+--------------------------------------------------------------------------------
+
+A. FRONTEND APPLICATION (React 18 + Vite + TypeScript + Tailwind CSS)
+   - Created a modern, responsive SaaS dashboard featuring clean aesthetics,
+     subtle gradients, glassmorphism card surfaces, and accessible typography.
+   - Built 12 complete, interactive functional pages and modules:
+     1. Landing Page (`/`):
+        - Hero section with value proposition and interactive fast-track buttons.
+        - Real-time Interactive Budget Estimator Slider allowing users to test
+          guest count and budget allocations dynamically.
+        - Comprehensive feature showcase grid and social proof testimonials.
+     2. Authentication & Demo Mode (`/login`, `/signup`):
+        - Email & password registration/login.
+        - "1-Click Instant Demo Login" as Priya Sharma with pre-loaded demo data.
+     3. Event Day Dashboard (`/dashboard`):
+        - Real-time ticking Countdown Timer (Days, Hours, Minutes, Seconds).
+        - Summary metric cards: Remaining Budget, Task Progress %, Confirmed
+          Vendors count, and Guest RSVP totals.
+        - Recharts Bar Chart visualizing expense distribution by category.
+        - Urgent Alerts banner for overspending and pending vendor payments.
+        - Interactive task checklist with instant completion toggling.
+     4. AI Event Creation Wizard (`/create-event`):
+        - 4-step guided questionnaire capturing Event Name, Type, Date & Duration,
+          Location, Headcount, Budget, Currency, Theme, Venue style, Food/Dietary
+          preferences, Cultural traditions, and Formality.
+        - Celebratory confetti animation upon master plan synthesis.
+     5. AI Event Plan (`/plan`):
+        - Displays the full 10-section AI-generated master plan.
+        - On-demand individual section regeneration with custom user prompts.
+        - Inline editing capabilities and plan persistence.
+     6. AI Budget Manager (`/budget`):
+        - Deterministic math engine (totals, actual spending, remaining balance,
+          utilization percentage, and pending vendor balances).
+        - Multi-currency support: INR (₹ with Lakhs formatting), USD, EUR, GBP.
+        - Recharts Donut Chart (Category distribution) and Comparison Bar Chart
+          (Estimated vs. Quoted vs. Actual).
+        - Category filtering and complete Add/Edit/Delete expense item modals.
+        - Overspending warnings and AI savings recommendations.
+     7. Smart Timeline & Tasks (`/timeline`):
+        - Preparation schedule structured into milestones (T-90d, T-60d, T-30d,
+          T-14d, T-7d, T-1d, Event Day).
+        - Priority (High/Medium/Low) and Status (Not Started/In Progress/Completed)
+          filtering, keyword search, and one-click task completion.
+     8. Vendor Management Hub (`/vendors`):
+        - Directory covering 9 service categories (Venues, Caterers, Decorators,
+          Photographers, DJs, Stylists, Transport, Equipment, Coordinators).
+        - Quotation, agreed price, advance paid, and balance due calculations.
+        - Vendor checklist flagging missing essential services.
+     9. Guest List & RSVP Manager (`/guests`):
+        - Categorization into Family, Friends, VIP, Colleagues, and Other.
+        - Headcount calculation with plus-ones for accurate catering plates.
+        - Dietary preferences and allergy tracking.
+        - 1-Click CSV Export that downloads guest rosters directly in browser.
+     10. Context-Aware AI Chat Assistant (`/chat`):
+         - Conversational assistant with live awareness of the active event's
+           budget, guest count, and location.
+         - 1-click prompt shortcuts (e.g., "Reduce decoration costs by 20%").
+         - Action Proposals requiring explicit user approval before modifying data.
+     11. Personalized Ideas & Inspiration Library (`/ideas`):
+         - Categorized ideas for DIY decor, return gifts, party games, invitation
+           wording, and eco-friendly celebrations with cost estimates.
+         - Ability to generate new ideas with AI or save custom entries.
+     12. Event Settings & AI Control Center (`/settings`):
+         - Event parameters editor.
+         - Google Gemini API key manager with live connectivity testing.
+         - Full Event Blueprint JSON Exporter.
+         - Event deletion with cascade purging and confirmation modal.
+
+B. BACKEND API & VERCEL SERVERLESS DEPLOYMENT
+   - Implemented RESTful Express API with Zod schema validation.
+   - Dual-mode database engine (`server/src/db.js`):
+     - File-backed persistence for local execution.
+     - Vercel-compatible `/tmp` directory storage and graceful in-memory
+       state fallback for read-only serverless execution environments.
+   - Pre-seeded realistic demonstration data:
+     - "Aarav & Meera's Royal Palace Wedding" in Jaipur (₹15,00,000 budget,
+       350 guests, complete with vendors, tasks, expenses, and guests).
+     - "TechNova Collegiate Hackathon & Summit" in Bangalore (₹3,50,000 budget).
+   - Created Vercel serverless adapter (`api/index.js`) to route `/api/*` endpoints
+     directly into serverless functions.
+   - Configured `vercel.json` with Vite framework routing and SPA fallbacks.
+   - Updated root `package.json` to build client bundles and install dependencies.
+   - Provided complete `supabase_schema.sql` PostgreSQL schema with Row Level
+     Security (RLS) policies and indexes for optional cloud database migration.
+
+
+================================================================================
+2. GENERATIVE AI SERVICES UTILIZED IN THE SUBMISSION
+================================================================================
+
+A. GEN AI MODEL & SDK SPECIFICATIONS
+   - Model Utilized:  Google Gemini 3.8 Flash (`gemini-3.8-flash`)
+   - Official SDK:    `@google/genai` (version >= 2.3.0)
+   - Structured Output: Strict JSON generation (`responseMimeType: "application/json"`)
+   - Architecture:    Dual-Engine Design:
+     1. Live Mode: Uses the official Google Gemini 3.8 Flash API when a
+        `GEMINI_API_KEY` is provided in environment variables or Settings UI.
+     2. Built-in Fallback Engine: Provides a deterministic, domain-specific
+        event intelligence engine when no API key is set, ensuring 100% of
+        features work seamlessly out-of-the-box without crashing.
+
+
+B. WHERE GENERATIVE AI IS UTILIZED ACROSS THE APPLICATION
+
+1. AI Event Creation Wizard (`POST /api/ai/generate-plan`):
+   - Location: `client/src/pages/CreateEventPage.tsx` -> `server/src/aiService.js`
+   - Purpose:  Transforms user inputs (event type, budget, guests, location,
+               traditions, formality) into a comprehensive 10-part master plan:
+               - Concept & theme narrative
+               - 4 custom decoration concepts
+               - Venue and technical specifications
+               - Multi-course food & catering recommendations
+               - Entertainment schedule and musical flow
+               - Guest management and reception protocols
+               - Essential vendor checklist
+               - Category-wise expense allocations matched to the budget ceiling
+               - 90-day chronological preparation timeline
+               - Statutory reminders, noise curfews, and licensing checklists
+
+2. On-Demand Section Regenerator (`POST /api/ai/regenerate-section`):
+   - Location: `client/src/pages/PlanPage.tsx` -> `server/src/aiService.js`
+   - Purpose:  Allows users to selectively re-generate individual sections of
+               their plan (e.g., Decoration Ideas, Catering Suggestions, or
+               Timeline) using targeted natural language prompts (e.g., "Make
+               decorations rustic bohemian with pampas grass" or "Include vegan
+               Jain food counters") without overwriting the rest of the plan.
+
+3. Personalized Ideas & Inspiration Generator (`POST /api/ai/generate-ideas`):
+   - Location: `client/src/pages/IdeasPage.tsx` -> `server/src/aiService.js`
+   - Purpose:  Generates creative, budget-conscious event concepts across
+               specific categories:
+               - DIY budget-friendly decoration projects
+               - Return favors and guest gift hampers
+               - Interactive parlor games and icebreaker activities
+               - Traditional and contemporary invitation wording
+               - Eco-friendly zero-waste party solutions
+               - Each generated idea includes an estimated cost and details.
+
+4. Context-Aware AI Chat Assistant (`POST /api/ai/chat`):
+   - Location: `client/src/pages/ChatPage.tsx` -> `server/src/aiService.js`
+   - Purpose:  Provides an interactive conversational assistant that loads the
+               active event's real-time state (budget, guest count, location,
+               and confirmed vendors) into its system context.
+               - Explains financial trade-offs (e.g. "How to reduce decor costs by 20%").
+               - Suggests custom dietary menus for specific headcounts.
+               - Generates structured Action Proposals (e.g., adjust budget
+                 or add a new task) that require user approval before data is modified.
+
+================================================================================
+Summary file generated for EventGenie AI submission.
+================================================================================
