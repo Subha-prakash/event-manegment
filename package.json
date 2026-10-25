@@ -3,12 +3,20 @@
   "version": "1.0.0",
   "description": "EventGenie AI — GenAI-Powered Event Planning Assistant",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server/src/index.js",
     "client": "npm run --prefix client dev",
-    "build": "npm run --prefix client build",
+    "build": "npm install --prefix client && npm run --prefix client build",
     "install:all": "npm install && npm run --prefix client install && npm run --prefix server install"
+  },
+  "dependencies": {
+    "@google/genai": "^2.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

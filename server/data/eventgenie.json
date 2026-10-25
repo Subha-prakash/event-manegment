@@ -1205,6 +1205,26 @@
       "description": "Polaroid instant camera station where guests snap a photo and write personal wishes in a hardbound keepsake album.",
       "estimated_cost": 12000,
       "created_at": "2026-10-25T17:14:39.622Z"
+    },
+    {
+      "id": "ida_1792949278131_iqpx",
+      "event_id": "evt_1792948479592",
+      "user_id": "usr_demo_01",
+      "category": "DIY Decorations",
+      "title": "Upcycled Fairy Jar Table Lanterns",
+      "description": "Recycled glass jars wrapped in burlap lace, filled with battery-operated warm micro-fairy lights and sprigs of fresh baby's breath.",
+      "estimated_cost": 9,
+      "created_at": "2026-10-25T17:27:58.131Z"
+    },
+    {
+      "id": "ida_1792949278147_piqx",
+      "event_id": "evt_1792948479592",
+      "user_id": "usr_demo_01",
+      "category": "DIY Decorations",
+      "title": "Origami Bird & Marigold Hanging Garland Canopy",
+      "description": "Handcrafted golden and blush paper origami cranes interspersed with fresh marigold strings hanging gracefully over the guest entrance.",
+      "estimated_cost": 17,
+      "created_at": "2026-10-25T17:27:58.147Z"
     }
   ],
   "ai_conversations": [
@@ -1247,6 +1267,22 @@
       "role": "assistant",
       "message": "Congratulations on creating \"holi\"! I've formulated a complete master plan with budget allocations, a 90-day timeline, and vendor checklists. How can I help fine-tune your preparations today?",
       "created_at": "2026-10-25T17:14:39.624Z"
+    },
+    {
+      "id": "msg_1792949248953_l6lw",
+      "user_id": "usr_demo_01",
+      "event_id": "evt_1792948479592",
+      "role": "user",
+      "message": "Reduce my decoration costs by 20%",
+      "created_at": "2026-10-25T17:27:28.953Z"
+    },
+    {
+      "id": "msg_1792949248956_jlvc",
+      "user_id": "usr_demo_01",
+      "event_id": "evt_1792948479592",
+      "role": "assistant",
+      "message": "To reduce your decoration expenses by ~20% without diminishing visual charm:\n1. **Focus on Focal Points**: Concentrate floral styling on the entrance arch and main stage backdrop, replacing tabletop florals with brass/glass lanterns and fairy lights (saves ~25-30% on floral procurement).\n2. **Seasonal & Local Blooms**: Replace exotic imported flowers with vibrant local marigolds, tube-roses (rajnigandha), and jasmine which cost a fraction of orchids.\n3. **Warm Ambient Lighting**: Warm Edison bulbs and LED uplighters create a royal, opulent mood across large areas at much lower cost than physical installations.\n\nEstimated potential savings: **EUR 1,60,000**. Would you like me to update your budget category estimates accordingly?",
+      "created_at": "2026-10-25T17:27:28.956Z"
     }
   ]
 }
