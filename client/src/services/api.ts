@@ -12,7 +12,8 @@ import {
   PlanData
 } from '../types';
 
-const BASE_URL = '/api';
+const RAW_BASE_URL = ((import.meta as any).env?.VITE_API_URL as string | undefined) || '/api';
+const BASE_URL = RAW_BASE_URL.replace(/\/+$/, '');
 
 function getHeaders(): HeadersInit {
   const token = localStorage.getItem('eg_token');
@@ -26,26 +27,33 @@ function getHeaders(): HeadersInit {
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
-  const res = await fetch(url, {
-    ...options,
-    headers: {
-      ...getHeaders(),
-      ...(options.headers || {})
-    }
-  });
+  try {
+    const res = await fetch(url, {
+      ...options,
+      headers: {
+        ...getHeaders(),
+        ...(options.headers || {})
+      }
+    });
 
-  if (!res.ok) {
-    let errorMsg = `Request failed: ${res.statusText}`;
-    try {
-      const json = await res.json();
-      if (json.error) errorMsg = json.error;
-    } catch {
-      // ignored
+    if (!res.ok) {
+      let errorMsg = `Request failed: ${res.statusText}`;
+      try {
+        const json = await res.json();
+        if (json.error) errorMsg = json.error;
+      } catch {
+        // ignored
+      }
+      throw new Error(errorMsg);
     }
-    throw new Error(errorMsg);
+
+    return res.json();
+  } catch (err: any) {
+    if (!err.message?.includes('Request failed')) {
+      console.error(`[API Network Error] ${options.method || 'GET'} ${url}:`, err);
+    }
+    throw err;
   }
-
-  return res.json();
 }
 
 export const api = {

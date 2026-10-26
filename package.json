@@ -5,6 +5,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "node server/src/index.js",
+    "serve": "node server/src/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server/src/index.js",
     "client": "npm run --prefix client dev",

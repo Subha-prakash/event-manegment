@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 import { z } from 'zod';
 import { db } from './db.js';
 import {
@@ -17,8 +20,21 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id']
+}));
+app.options('*', cors());
 app.use(express.json());
+
+// Normalize request url if accessed via serverless rewrite
+app.use((req, res, next) => {
+  if (req.url.startsWith('/api/index.js')) {
+    req.url = req.url.replace(/^\/api\/index\.js/, '') || '/';
+  }
+  next();
+});
 
 // Helper to extract or fallback user
 function getActiveUserId(req) {
@@ -570,8 +586,34 @@ app.delete('/api/events/:id/ideas/:ideaId', (req, res) => {
   res.json({ success: true });
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`🚀 EventGenie AI Server running on port ${PORT}`);
-  console.log(`🤖 AI Status: ${getAiStatus().mode} (${getAiStatus().model})`);
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const clientDistPath = path.resolve(__dirname, '../../client/dist');
+
+// Serve client dist if it exists (for full-stack single-port demo or production)
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+  
+  // SPA Catch-all fallback for client-side routing (ignoring /api routes)
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+}
+
+// Start Server if run directly (not in a serverless environment like Vercel)
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+
+if (!isServerless) {
+  app.listen(PORT, () => {
+    console.log(`🚀 EventGenie AI Server running on port ${PORT}`);
+    console.log(`🤖 AI Status: ${getAiStatus().mode} (${getAiStatus().model})`);
+    if (fs.existsSync(clientDistPath)) {
+      console.log(`🌐 Serving static client UI from ${clientDistPath}`);
+    }
+  });
+}
+
+export default app;
