@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
-import { Task } from '../types';
+import { Task, PriorityLevel, TaskStatus, getErrorMessage } from '../types';
 import {
   CalendarCheck,
   Plus,
@@ -61,8 +61,8 @@ export const TimelinePage: React.FC = () => {
       await api.updateTask(activeEvent!.id, task.id, { status: nextStatus });
       setTasks(prev => prev.map(t => t.id === task.id ? { ...t, status: nextStatus } : t));
       showToast(nextStatus === 'Completed' ? 'Task completed! 🎉' : 'Task reopened', 'success');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to update task', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -102,8 +102,8 @@ export const TimelinePage: React.FC = () => {
       await api.deleteTask(activeEvent!.id, id);
       setTasks(prev => prev.filter(t => t.id !== id));
       showToast('Task removed', 'info');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to delete task', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -125,8 +125,8 @@ export const TimelinePage: React.FC = () => {
         showToast('Task added', 'success');
       }
       setIsModalOpen(false);
-    } catch (err: any) {
-      showToast(err.message || 'Failed to save task', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -375,7 +375,7 @@ export const TimelinePage: React.FC = () => {
                   <label className="block text-xs font-bold text-slate-700 mb-1">Priority</label>
                   <select
                     value={formData.priority}
-                    onChange={e => setFormData({ ...formData, priority: e.target.value as any })}
+                    onChange={e => setFormData({ ...formData, priority: e.target.value as PriorityLevel })}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
                   >
                     <option value="High">High</option>
@@ -388,7 +388,7 @@ export const TimelinePage: React.FC = () => {
                   <label className="block text-xs font-bold text-slate-700 mb-1">Status</label>
                   <select
                     value={formData.status}
-                    onChange={e => setFormData({ ...formData, status: e.target.value as any })}
+                    onChange={e => setFormData({ ...formData, status: e.target.value as TaskStatus })}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
                   >
                     <option value="Not Started">Not Started</option>

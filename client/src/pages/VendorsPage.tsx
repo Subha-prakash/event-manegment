@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
-import { Vendor } from '../types';
+import { Vendor, BookingStatus, getErrorMessage } from '../types';
 import {
   Store,
   Plus,
@@ -109,8 +109,8 @@ export const VendorsPage: React.FC = () => {
       await api.deleteVendor(activeEvent!.id, id);
       setVendors(prev => prev.filter(v => v.id !== id));
       showToast('Vendor record removed', 'info');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to delete vendor', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -132,8 +132,8 @@ export const VendorsPage: React.FC = () => {
         showToast('Vendor added', 'success');
       }
       setIsModalOpen(false);
-    } catch (err: any) {
-      showToast(err.message || 'Failed to save vendor', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -444,7 +444,7 @@ export const VendorsPage: React.FC = () => {
                   <label className="block text-xs font-bold text-slate-700 mb-1">Booking Status</label>
                   <select
                     value={formData.booking_status}
-                    onChange={e => setFormData({ ...formData, booking_status: e.target.value as any })}
+                    onChange={e => setFormData({ ...formData, booking_status: e.target.value as BookingStatus })}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
                   >
                     <option value="Confirmed">Confirmed</option>

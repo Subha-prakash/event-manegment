@@ -177,3 +177,18 @@ export interface AiStatus {
   model: string;
   mode: string;
 }
+
+export type PriorityLevel = 'High' | 'Medium' | 'Low';
+export type TaskStatus = 'Not Started' | 'In Progress' | 'Completed';
+export type BookingStatus = 'Confirmed' | 'Booked' | 'In Negotiation' | 'Pending Quotation';
+export type GuestGroup = 'Family' | 'Friends' | 'VIP' | 'Colleagues' | 'Other';
+export type InvitationStatus = 'Draft' | 'Sent';
+export type RsvpStatus = 'Pending' | 'Accepted' | 'Declined';
+export type PaymentStatus = 'Paid' | 'Partially Paid' | 'Pending';
+
+export function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  if (typeof error === 'string') return error;
+  if (error && typeof error === 'object' && 'message' in error) return String((error as { message: unknown }).message);
+  return 'An unexpected error occurred';
+}

@@ -129,17 +129,53 @@ npm run dev
 
 ---
 
-## 🧪 Testing and Verification
+---
 
-Run the integration test suite to verify all backend REST endpoints and AI workflows:
+## 🧪 Testing and Quality Verification
+
+EventGenie AI is verified by an automated test harness covering unit and integration testing:
+
 ```bash
-node server/integration_test.js
+# Run all unit and integration test suites (31 passing tests)
+npm test
+
+# Run complete pipeline (TypeScript strict check + full test suite)
+npm run test:all
+
+# Run individual suites
+npm run test:unit         # Deterministic financial math, zero budgets, Zod schemas
+npm run test:integration  # Health, Auth, Multi-tenant 403 isolation, Event CRUD
+npm run test:client       # Client TypeScript compilation check (tsc --noEmit)
 ```
 
-Build the client production bundle:
+Build the optimized client production bundle:
 ```bash
 npm run build
 ```
+
+---
+
+## 🛡️ Enterprise Security & Standards
+
+1. **Multi-Tenant Ownership Enforcement**: Every `/api/events/:id/*` endpoint validates that `event.user_id === userId`. Cross-tenant attempts immediately return `403 Forbidden`.
+2. **OWASP Security Headers**: Comprehensive headers configured on all responses:
+   - `Content-Security-Policy` (CSP)
+   - `X-Frame-Options: DENY` (Anti-clickjacking)
+   - `X-Content-Type-Options: nosniff` (MIME sniffing prevention)
+   - `X-XSS-Protection: 1; mode=block`
+   - `Referrer-Policy: strict-origin-when-cross-origin`
+   - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+3. **Sliding-Window Rate Limiting**: In-memory rate limiting with automated TTL cleanup and bounded memory footprint prevents brute force attacks and expensive AI quota exhaustion.
+4. **Server-Side API Key Isolation**: Gemini credentials remain strictly backend-isolated in `process.env.GEMINI_API_KEY` and are never exposed to the client bundle.
+5. **Database Isolation in Tests**: Automated test suites write to ephemeral files in `os.tmpdir()`, leaving production/seed data untouched.
+
+---
+
+## ♿ Accessibility (WCAG 2.2 AA)
+
+1. **Visual Data Alternatives**: Recharts donut and bar visualizations feature companion structured `<table className="sr-only">` data summaries and descriptive `aria-label` tags for screen readers.
+2. **Reduced Motion Support**: System-level `@media (prefers-reduced-motion: reduce)` automatically deactivates CSS keyframe animations for vestibular safety.
+3. **Keyboard & Screen Reader Navigable**: Fully accessible modal dialogs, descriptive form labels, high color-contrast ratios (4.5:1+), and semantic HTML hierarchy.
 
 ---
 

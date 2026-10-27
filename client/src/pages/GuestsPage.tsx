@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
-import { Guest } from '../types';
+import { Guest, GuestGroup, RsvpStatus, InvitationStatus, getErrorMessage } from '../types';
 import {
   Users,
   Plus,
@@ -98,8 +98,8 @@ export const GuestsPage: React.FC = () => {
       await api.deleteGuest(activeEvent!.id, id);
       setGuests(prev => prev.filter(g => g.id !== id));
       showToast('Guest removed', 'info');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to delete guest', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -121,8 +121,8 @@ export const GuestsPage: React.FC = () => {
         showToast('Guest added to roster', 'success');
       }
       setIsModalOpen(false);
-    } catch (err: any) {
-      showToast(err.message || 'Failed to save guest', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -389,7 +389,7 @@ export const GuestsPage: React.FC = () => {
                   <label className="block text-xs font-bold text-slate-700 mb-1">Group Affiliation</label>
                   <select
                     value={formData.group_name}
-                    onChange={e => setFormData({ ...formData, group_name: e.target.value as any })}
+                    onChange={e => setFormData({ ...formData, group_name: e.target.value as GuestGroup })}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
                   >
                     {GROUPS.map(grp => (
@@ -402,7 +402,7 @@ export const GuestsPage: React.FC = () => {
                   <label className="block text-xs font-bold text-slate-700 mb-1">RSVP Status</label>
                   <select
                     value={formData.rsvp_status}
-                    onChange={e => setFormData({ ...formData, rsvp_status: e.target.value as any })}
+                    onChange={e => setFormData({ ...formData, rsvp_status: e.target.value as RsvpStatus })}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
                   >
                     <option value="Pending">Pending</option>
@@ -429,7 +429,7 @@ export const GuestsPage: React.FC = () => {
                   <label className="block text-xs font-bold text-slate-700 mb-1">Invitation Status</label>
                   <select
                     value={formData.invitation_status}
-                    onChange={e => setFormData({ ...formData, invitation_status: e.target.value as any })}
+                    onChange={e => setFormData({ ...formData, invitation_status: e.target.value as InvitationStatus })}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
                   >
                     <option value="Sent">Sent</option>

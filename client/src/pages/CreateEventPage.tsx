@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
+import { getErrorMessage } from '../types';
 import confetti from 'canvas-confetti';
 import {
   Sparkles,
@@ -100,8 +101,8 @@ export const CreateEventPage: React.FC = () => {
       await refreshEvents();
       setActiveEventId(newEvent.id);
       navigate('/plan');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to generate event plan', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
       setIsGenerating(false);
     }
   };

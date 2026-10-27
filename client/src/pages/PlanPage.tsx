@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
-import { PlanData } from '../types';
+import { PlanData, getErrorMessage } from '../types';
 import {
   Sparkles,
   RefreshCw,
@@ -52,8 +52,8 @@ export const PlanPage: React.FC = () => {
       await api.updateEvent(activeEvent.id, { plan_data: plan });
       await refreshActiveEvent();
       showToast('Master Plan saved successfully!', 'success');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to save plan', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     } finally {
       setSaving(false);
     }
@@ -67,8 +67,8 @@ export const PlanPage: React.FC = () => {
       showToast(`Regenerated section "${sectionKey.replace(/_/g, ' ')}" with AI`, 'success');
       setModalSection(null);
       setSectionPrompt('');
-    } catch (err: any) {
-      showToast(err.message || 'Regeneration failed', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     } finally {
       setRegeneratingSection(null);
     }

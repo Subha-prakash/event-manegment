@@ -1,7 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
-import { AiConversation } from '../types';
+import { AiConversation, getErrorMessage } from '../types';
+
+export interface ChatSuggestedAction {
+  type: string;
+  data: {
+    category?: string;
+    estimated_saving?: number;
+    title?: string;
+    description?: string;
+    priority?: 'High' | 'Medium' | 'Low';
+    due_date?: string;
+    [key: string]: unknown;
+  };
+}
 import {
   MessageSquare,
   Sparkles,
@@ -75,25 +88,13 @@ export const ChatPage: React.FC = () => {
       if (res.suggested_action) {
         setPendingAction(res.suggested_action);
       }
-    } catch (err: any) {
-      showToast(err.message || 'Chat error', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     } finally {
       setLoading(false);
     }
   };
 
-interface ChatSuggestedAction {
-  type: string;
-  data: {
-    category?: string;
-    estimated_saving?: number;
-    title?: string;
-    description?: string;
-    priority?: 'High' | 'Medium' | 'Low';
-    due_date?: string;
-    [key: string]: unknown;
-  };
-}
 
   const handleApplyAction = async (action: ChatSuggestedAction) => {
     if (!activeEvent) return;

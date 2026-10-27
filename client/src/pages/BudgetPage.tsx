@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
-import { Expense, BudgetSummary } from '../types';
+import { Expense, BudgetSummary, PaymentStatus, getErrorMessage } from '../types';
 import {
   PieChart as PieIcon,
   Plus,
@@ -123,8 +123,8 @@ export const BudgetPage: React.FC = () => {
       await api.deleteExpense(activeEvent!.id, id);
       showToast('Expense item removed', 'info');
       await loadData();
-    } catch (err: any) {
-      showToast(err.message || 'Failed to delete expense', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -145,8 +145,8 @@ export const BudgetPage: React.FC = () => {
       }
       setIsModalOpen(false);
       await loadData();
-    } catch (err: any) {
-      showToast(err.message || 'Failed to save expense', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -573,7 +573,7 @@ export const BudgetPage: React.FC = () => {
                   <label className="block text-xs font-bold text-slate-700 mb-1">Payment Status</label>
                   <select
                     value={formData.payment_status}
-                    onChange={e => setFormData({ ...formData, payment_status: e.target.value as any })}
+                    onChange={e => setFormData({ ...formData, payment_status: e.target.value as PaymentStatus })}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
                   >
                     <option value="Pending">Pending</option>

@@ -484,7 +484,17 @@ const initialSeedData = {
 class Database {
   constructor() {
     this.data = initialSeedData;
+    this.eventMap = new Map();
     this.load();
+  }
+
+  rebuildIndex() {
+    this.eventMap = new Map();
+    if (this.data && Array.isArray(this.data.events)) {
+      for (const ev of this.data.events) {
+        this.eventMap.set(ev.id, ev);
+      }
+    }
   }
 
   load() {
@@ -495,9 +505,11 @@ class Database {
       } else {
         this.save();
       }
+      this.rebuildIndex();
     } catch (err) {
       console.error("Error loading database file, initializing with seed data:", err);
       this.data = initialSeedData;
+      this.rebuildIndex();
       this.save();
     }
   }
@@ -537,6 +549,9 @@ class Database {
   }
 
   getEventById(id) {
+    if (this.eventMap && this.eventMap.has(id)) {
+      return this.eventMap.get(id);
+    }
     return this.data.events.find(e => e.id === id);
   }
 
@@ -559,6 +574,7 @@ class Database {
       updated_at: new Date().toISOString()
     };
     this.data.events.push(newEvent);
+    if (this.eventMap) this.eventMap.set(newEvent.id, newEvent);
     this.save();
     return newEvent;
   }
@@ -571,6 +587,7 @@ class Database {
       ...updates,
       updated_at: new Date().toISOString()
     };
+    if (this.eventMap) this.eventMap.set(id, this.data.events[idx]);
     this.save();
     return this.data.events[idx];
   }
@@ -579,6 +596,7 @@ class Database {
     const initialLen = this.data.events.length;
     this.data.events = this.data.events.filter(e => e.id !== id);
     if (this.data.events.length === initialLen) return false;
+    if (this.eventMap) this.eventMap.delete(id);
 
     // Cascade delete associated items
     this.data.expenses = this.data.expenses.filter(item => item.event_id !== id);

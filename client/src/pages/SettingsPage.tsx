@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
+import { getErrorMessage } from '../types';
 import {
   Settings,
   Sparkles,
@@ -79,21 +80,21 @@ export const SettingsPage: React.FC = () => {
       await refreshActiveEvent();
       await refreshEvents();
       showToast('Event settings saved successfully!', 'success');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to update event', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
-  const handleConfigureApiKey = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleConfigureApiKey = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     setIsConfiguringKey(true);
     try {
       const res = await api.configureApiKey(apiKeyInput);
       await refreshAiStatus();
       showToast(res.message, res.ai.hasKey ? 'success' : 'info');
       setApiKeyInput('');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to update API key', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     } finally {
       setIsConfiguringKey(false);
     }
@@ -118,8 +119,8 @@ export const SettingsPage: React.FC = () => {
       await refreshEvents();
       setDeleteConfirmOpen(false);
       navigate('/dashboard');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to delete event', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     } finally {
       setIsDeleting(false);
     }
@@ -201,7 +202,7 @@ export const SettingsPage: React.FC = () => {
             {aiStatus?.hasKey && (
               <button
                 type="button"
-                onClick={() => handleConfigureApiKey({ preventDefault: () => {} } as any)}
+                onClick={() => handleConfigureApiKey()}
                 className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 text-xs font-semibold shrink-0"
               >
                 Clear Key

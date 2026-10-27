@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, Event, AiStatus } from '../types';
+import { User, Event, AiStatus, getErrorMessage } from '../types';
 import { api } from '../services/api';
 
 export interface ToastItem {
@@ -141,8 +141,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setUser(res.user);
       await refreshEvents();
       showToast(`Signed in as ${res.user.name}`, 'success');
-    } catch (err: any) {
-      showToast(err.message || 'Demo login failed', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 

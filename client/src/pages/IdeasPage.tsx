@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
-import { SavedIdea } from '../types';
+import { SavedIdea, getErrorMessage } from '../types';
 import {
   Sparkles,
   Bookmark,
@@ -71,8 +71,8 @@ export const IdeasPage: React.FC = () => {
       }
       showToast(`Generated ${generated.length} fresh ideas with AI!`, 'success');
       await loadIdeas();
-    } catch (err: any) {
-      showToast(err.message || 'Failed to generate ideas', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     } finally {
       setIsGenerating(false);
     }
@@ -83,8 +83,8 @@ export const IdeasPage: React.FC = () => {
       await api.deleteSavedIdea(activeEvent!.id, id);
       setIdeas(prev => prev.filter(i => i.id !== id));
       showToast('Idea removed from collection', 'info');
-    } catch (err: any) {
-      showToast(err.message || 'Failed to delete idea', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 
@@ -101,8 +101,8 @@ export const IdeasPage: React.FC = () => {
       showToast('Idea saved to collection', 'success');
       setIsModalOpen(false);
       setCustomIdea({ category: 'DIY Decorations', title: '', description: '', estimated_cost: 500 });
-    } catch (err: any) {
-      showToast(err.message || 'Failed to save idea', 'error');
+    } catch (err: unknown) {
+      showToast(getErrorMessage(err), 'error');
     }
   };
 

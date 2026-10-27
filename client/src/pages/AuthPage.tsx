@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link, useSearchParams } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 import { useApp } from '../context/AppContext';
+import { getErrorMessage } from '../types';
 import {
   Sparkles,
   Mail,
@@ -261,8 +262,8 @@ export const AuthPage: React.FC = () => {
       triggerConfetti();
       const redirect = searchParams.get('redirect') || '/dashboard';
       navigate(redirect);
-    } catch (err: any) {
-      setError(err.message || 'Authentication failed. Please verify your details.');
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -282,8 +283,8 @@ export const AuthPage: React.FC = () => {
         triggerConfetti();
         const redirect = searchParams.get('redirect') || '/dashboard';
         navigate(redirect);
-      } catch (err: any) {
-        setError(err.message || 'Demo login failed');
+      } catch (err: unknown) {
+        setError(getErrorMessage(err));
       } finally {
         setLoading(false);
       }
@@ -301,8 +302,8 @@ export const AuthPage: React.FC = () => {
       triggerConfetti();
       const redirect = searchParams.get('redirect') || '/dashboard';
       navigate(redirect);
-    } catch (err: any) {
-      setError(err.message || 'Demo access failed');
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -322,8 +323,8 @@ export const AuthPage: React.FC = () => {
       showToast('Successfully signed in via Google!', 'success');
       const redirect = searchParams.get('redirect') || '/dashboard';
       navigate(redirect);
-    } catch (err: any) {
-      setError(err.message || 'Google authentication failed');
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
