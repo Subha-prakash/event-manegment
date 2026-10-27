@@ -20,6 +20,8 @@ interface AppContextType {
   refreshActiveEvent: () => Promise<void>;
   refreshAiStatus: () => Promise<void>;
   loginDemo: () => Promise<void>;
+  login: (email: string, name?: string) => Promise<User>;
+  register: (name: string, email: string) => Promise<User>;
   logout: () => void;
   formatCurrency: (amount: number, currency?: string) => string;
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
@@ -117,6 +119,22 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     initAuthAndData();
   }, []);
 
+  const login = async (email: string, name?: string): Promise<User> => {
+    const res = await api.login(email, name);
+    setUser(res.user);
+    await refreshEvents();
+    showToast(`Welcome back, ${res.user.name}!`, 'success');
+    return res.user;
+  };
+
+  const register = async (name: string, email: string): Promise<User> => {
+    const res = await api.register(name, email);
+    setUser(res.user);
+    await refreshEvents();
+    showToast(`Welcome to EventGenie, ${res.user.name}!`, 'success');
+    return res.user;
+  };
+
   const loginDemo = async () => {
     try {
       const res = await api.loginDemo();
@@ -160,6 +178,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         refreshEvents,
         refreshActiveEvent,
         refreshAiStatus,
+        login,
+        register,
         loginDemo,
         logout,
         formatCurrency,
