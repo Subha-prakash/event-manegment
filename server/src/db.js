@@ -6,10 +6,15 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// In serverless environments (Vercel, AWS Lambda), write to temp directory
+// In serverless environments (Vercel, AWS Lambda) or automated test mode, write to temp directory
 const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
-const DATA_DIR = isServerless ? path.join(os.tmpdir(), 'eventgenie-data') : path.join(__dirname, '..', 'data');
-const DB_FILE = path.join(DATA_DIR, 'eventgenie.json');
+const isTestMode = Boolean(
+  process.env.NODE_ENV === 'test' ||
+  process.execArgv.some(a => a.includes('test')) ||
+  process.argv.some(a => a.includes('test'))
+);
+const DATA_DIR = isServerless || isTestMode ? path.join(os.tmpdir(), 'eventgenie-data') : path.join(__dirname, '..', 'data');
+const DB_FILE = path.join(DATA_DIR, isTestMode ? `eventgenie-test-${process.pid}.json` : 'eventgenie.json');
 
 // Ensure data directory exists safely
 try {

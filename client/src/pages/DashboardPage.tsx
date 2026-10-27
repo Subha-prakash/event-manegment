@@ -341,7 +341,7 @@ export const DashboardPage: React.FC = () => {
             </div>
 
             {budgetSummary?.categoryBreakdown && budgetSummary.categoryBreakdown.length > 0 ? (
-              <div className="h-64 w-full">
+              <div className="h-64 w-full" role="img" aria-label="Budget summary bar chart comparing estimated and actual costs">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={budgetSummary.categoryBreakdown.map(c => ({
@@ -354,13 +354,33 @@ export const DashboardPage: React.FC = () => {
                     <XAxis dataKey="name" angle={-15} textAnchor="end" interval={0} tick={{ fontSize: 11 }} />
                     <YAxis tick={{ fontSize: 11 }} />
                     <Tooltip
-                      formatter={(val: any) => formatCurrency(Number(val))}
+                      formatter={(val: unknown) => formatCurrency(Number(val) || 0)}
                       contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}
                     />
                     <Bar dataKey="Estimated" fill="#c4b5fd" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="Actual" fill="#7c3aed" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
+                {/* Screen reader table summary */}
+                <table className="sr-only">
+                  <caption>Budget category summary</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Category</th>
+                      <th scope="col">Estimated</th>
+                      <th scope="col">Actual</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {budgetSummary.categoryBreakdown.map((cat, i) => (
+                      <tr key={i}>
+                        <td>{cat.category}</td>
+                        <td>{formatCurrency(cat.estimated)}</td>
+                        <td>{formatCurrency(cat.actual)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             ) : (
               <div className="text-center py-10 text-slate-400 text-xs">No expenses entered yet.</div>

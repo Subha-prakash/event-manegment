@@ -20,13 +20,29 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// ----------------------------------------------------
+// Security Headers & CORS
+// ----------------------------------------------------
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https:;"
+  );
+  next();
+});
+
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id']
 }));
 app.options('*', cors());
-app.use(express.json());
+app.use(express.json({ limit: '2mb' }));
 
 // Normalize request url if accessed via serverless rewrite
 app.use((req, res, next) => {
@@ -36,9 +52,72 @@ app.use((req, res, next) => {
   next();
 });
 
+// ----------------------------------------------------
+// Rate Limiting Middleware (In-Memory Sliding Window)
+// ----------------------------------------------------
+const rateLimitStore = new Map();
+
+export function createRateLimiter({ windowMs = 60000, max = 60, message = 'Too many requests, please slow down.' } = {}) {
+  return (req, res, next) => {
+    const ip = req.ip || req.headers['x-forwarded-for'] || req.socket?.remoteAddress || '127.0.0.1';
+    const key = `${ip}:${req.baseUrl || ''}${req.path || ''}`;
+    const now = Date.now();
+    let entry = rateLimitStore.get(key);
+
+    if (!entry || now > entry.resetAt) {
+      entry = { count: 1, resetAt: now + windowMs };
+      rateLimitStore.set(key, entry);
+    } else {
+      entry.count += 1;
+    }
+
+    res.setHeader('RateLimit-Limit', max);
+    res.setHeader('RateLimit-Remaining', Math.max(0, max - entry.count));
+    res.setHeader('RateLimit-Reset', Math.ceil(entry.resetAt / 1000));
+
+    if (entry.count > max) {
+      res.setHeader('Retry-After', Math.ceil((entry.resetAt - now) / 1000));
+      return res.status(429).json({ error: message });
+    }
+    next();
+  };
+}
+
+const authRateLimiter = createRateLimiter({ windowMs: 60000, max: 40, message: 'Too many authentication attempts. Please wait.' });
+const aiRateLimiter = createRateLimiter({ windowMs: 60000, max: 30, message: 'AI rate limit exceeded. Please wait a moment.' });
+
 // Helper to extract or fallback user
-function getActiveUserId(req) {
-  return req.headers['x-user-id'] || 'usr_demo_01';
+export function getActiveUserId(req) {
+  if (req.headers['x-user-id']) return req.headers['x-user-id'];
+  const auth = req.headers['authorization'];
+  if (auth && auth.startsWith('Bearer tok_')) {
+    return auth.replace('Bearer tok_', '');
+  }
+  return 'usr_demo_01';
+}
+
+// ----------------------------------------------------
+// Event Authorization & Ownership Middleware
+// ----------------------------------------------------
+export function authorizeEvent(req, res, next) {
+  const eventId = req.params.id || req.params.eventId || req.body?.eventId;
+  if (!eventId) {
+    return res.status(400).json({ error: 'Event ID is required' });
+  }
+
+  const event = db.getEventById(eventId);
+  if (!event) {
+    return res.status(404).json({ error: 'Event not found' });
+  }
+
+  const userId = getActiveUserId(req);
+  // Enforce resource ownership check
+  if (event.user_id && event.user_id !== userId) {
+    return res.status(403).json({ error: 'Forbidden: You do not have permission to access this event' });
+  }
+
+  req.event = event;
+  next();
 }
 
 // ----------------------------------------------------
@@ -69,35 +148,35 @@ app.post('/api/ai/configure-key', (req, res) => {
 // ----------------------------------------------------
 // Auth Endpoints
 // ----------------------------------------------------
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', authRateLimiter, (req, res) => {
   const { email, name } = req.body;
-  if (!email) {
-    return res.status(400).json({ error: 'Email is required' });
+  if (!email || typeof email !== 'string' || !email.includes('@')) {
+    return res.status(400).json({ error: 'A valid email is required' });
   }
 
-  let user = db.getUserByEmail(email);
+  let user = db.getUserByEmail(email.trim());
   if (!user) {
     user = db.createUser({
-      name: name || email.split('@')[0],
-      email
+      name: (name || email.split('@')[0]).trim(),
+      email: email.trim()
     });
   }
 
   res.json({ user, token: `tok_${user.id}` });
 });
 
-app.post('/api/auth/register', (req, res) => {
+app.post('/api/auth/register', authRateLimiter, (req, res) => {
   const { name, email } = req.body;
-  if (!email || !name) {
-    return res.status(400).json({ error: 'Name and email are required' });
+  if (!email || !name || typeof email !== 'string' || !email.includes('@')) {
+    return res.status(400).json({ error: 'Name and a valid email are required' });
   }
 
-  const existing = db.getUserByEmail(email);
+  const existing = db.getUserByEmail(email.trim());
   if (existing) {
     return res.status(409).json({ error: 'User already exists with this email' });
   }
 
-  const user = db.createUser({ name, email });
+  const user = db.createUser({ name: name.trim(), email: email.trim() });
   res.status(201).json({ user, token: `tok_${user.id}` });
 });
 
@@ -161,12 +240,12 @@ app.post('/api/events', async (req, res) => {
 
     // 3. Seed initial expense breakdown based on AI plan
     if (plan.budget_breakdown && Array.isArray(plan.budget_breakdown)) {
-      plan.budget_breakdown.forEach((item, index) => {
+      plan.budget_breakdown.forEach((item) => {
         db.addExpense({
           event_id: newEvent.id,
           category: item.category,
-          description: item.reason || `${item.category} allocated allocation`,
-          estimated_amount: item.estimated_cost,
+          description: item.reason || `${item.category} allocation`,
+          estimated_amount: Number(item.estimated_cost) || 0,
           quoted_amount: 0,
           actual_amount: 0,
           payment_status: 'Pending',
@@ -178,19 +257,18 @@ app.post('/api/events', async (req, res) => {
 
     // 4. Seed initial tasks based on AI plan timeline
     if (plan.timeline && Array.isArray(plan.timeline)) {
-      const eventDate = new Date(newEvent.event_date);
-      plan.timeline.forEach(t => {
-        const dueDate = new Date(eventDate.getTime() - (t.days_before_event || 0) * 86400000);
+      const eventTimestamp = new Date(newEvent.event_date).getTime();
+      plan.timeline.forEach((item) => {
+        const days = Number(item.days_before_event) || 14;
+        const dueDate = new Date(eventTimestamp - (days * 86400000)).toISOString().split('T')[0];
         db.addTask({
           event_id: newEvent.id,
-          title: t.task,
-          description: t.description || `Milestone ${t.days_before_event} days before event`,
-          start_date: new Date().toISOString().split('T')[0],
-          due_date: dueDate.toISOString().split('T')[0],
-          priority: t.priority || 'Medium',
+          title: item.task,
+          description: item.description || `Milestone for ${newEvent.name} (T-${days} days)`,
+          due_date: dueDate,
+          priority: item.priority || 'Medium',
           status: 'Not Started',
-          assigned_to: t.assigned_to || 'Event Planner',
-          notes: ''
+          assigned_to: 'Planner Team'
         });
       });
     }
@@ -214,7 +292,7 @@ app.post('/api/events', async (req, res) => {
       user_id: userId,
       event_id: newEvent.id,
       role: 'assistant',
-      message: `Congratulations on creating "${newEvent.name}"! I've formulated a complete master plan with budget allocations, a 90-day timeline, and vendor checklists. How can I help fine-tune your preparations today?`
+      message: `Congratulations on creating "${newEvent.name}"! I've formulated a complete master plan with budget allocations, a milestone timeline, and vendor checklists. How can I help fine-tune your preparations today?`
     });
 
     res.status(201).json(newEvent);
@@ -227,15 +305,11 @@ app.post('/api/events', async (req, res) => {
   }
 });
 
-app.get('/api/events/:id', (req, res) => {
-  const event = db.getEventById(req.params.id);
-  if (!event) {
-    return res.status(404).json({ error: 'Event not found' });
-  }
-  res.json(event);
+app.get('/api/events/:id', authorizeEvent, (req, res) => {
+  res.json(req.event);
 });
 
-app.put('/api/events/:id', (req, res) => {
+app.put('/api/events/:id', authorizeEvent, (req, res) => {
   const updated = db.updateEvent(req.params.id, req.body);
   if (!updated) {
     return res.status(404).json({ error: 'Event not found' });
@@ -243,7 +317,7 @@ app.put('/api/events/:id', (req, res) => {
   res.json(updated);
 });
 
-app.delete('/api/events/:id', (req, res) => {
+app.delete('/api/events/:id', authorizeEvent, (req, res) => {
   const success = db.deleteEvent(req.params.id);
   if (!success) {
     return res.status(404).json({ error: 'Event not found' });
@@ -254,7 +328,7 @@ app.delete('/api/events/:id', (req, res) => {
 // ----------------------------------------------------
 // AI Plan & Section Regeneration
 // ----------------------------------------------------
-app.post('/api/ai/generate-plan', async (req, res) => {
+app.post('/api/ai/generate-plan', aiRateLimiter, async (req, res) => {
   try {
     const plan = await generateFullEventPlan(req.body);
     res.json(plan);
@@ -263,18 +337,17 @@ app.post('/api/ai/generate-plan', async (req, res) => {
   }
 });
 
-app.post('/api/ai/regenerate-section', async (req, res) => {
+app.post('/api/ai/regenerate-section', aiRateLimiter, authorizeEvent, async (req, res) => {
   try {
-    const { eventId, sectionKey, instructions } = req.body;
-    const event = db.getEventById(eventId);
-    if (!event) return res.status(404).json({ error: 'Event not found' });
+    const { sectionKey, instructions } = req.body;
+    const event = req.event;
 
     const updatedSection = await regeneratePlanSection(event, sectionKey, instructions);
 
     // Update in event plan_data
     const currentPlan = event.plan_data || {};
     const newPlan = { ...currentPlan, ...updatedSection };
-    db.updateEvent(eventId, { plan_data: newPlan });
+    db.updateEvent(event.id, { plan_data: newPlan });
 
     res.json({
       sectionKey,
@@ -286,7 +359,7 @@ app.post('/api/ai/regenerate-section', async (req, res) => {
   }
 });
 
-app.post('/api/ai/generate-ideas', async (req, res) => {
+app.post('/api/ai/generate-ideas', aiRateLimiter, async (req, res) => {
   try {
     const { eventId, category } = req.body;
     const event = eventId ? db.getEventById(eventId) : null;
@@ -300,16 +373,22 @@ app.post('/api/ai/generate-ideas', async (req, res) => {
 // ----------------------------------------------------
 // AI Contextual Chat
 // ----------------------------------------------------
-app.get('/api/ai/conversations/:eventId', (req, res) => {
+app.get('/api/ai/conversations/:eventId', (req, res, next) => {
+  req.params.id = req.params.eventId;
+  next();
+}, authorizeEvent, (req, res) => {
   const history = db.getAiConversations(req.params.eventId);
   res.json(history);
 });
 
-app.post('/api/ai/chat', async (req, res) => {
+app.post('/api/ai/chat', aiRateLimiter, (req, res, next) => {
+  req.params.id = req.body?.eventId;
+  next();
+}, authorizeEvent, async (req, res) => {
   try {
     const { eventId, message } = req.body;
     const userId = getActiveUserId(req);
-    const event = db.getEventById(eventId);
+    const event = req.event;
 
     if (!message || !message.trim()) {
       return res.status(400).json({ error: 'Message cannot be empty' });
@@ -320,7 +399,7 @@ app.post('/api/ai/chat', async (req, res) => {
       user_id: userId,
       event_id: eventId,
       role: 'user',
-      message
+      message: message.trim()
     });
 
     const conversationHistory = db.getAiConversations(eventId);
@@ -353,12 +432,12 @@ app.post('/api/ai/chat', async (req, res) => {
 // ----------------------------------------------------
 // Expenses & Budget Management
 // ----------------------------------------------------
-app.get('/api/events/:id/expenses', (req, res) => {
+app.get('/api/events/:id/expenses', authorizeEvent, (req, res) => {
   const expenses = db.getExpensesByEvent(req.params.id);
   res.json(expenses);
 });
 
-app.post('/api/events/:id/expenses', (req, res) => {
+app.post('/api/events/:id/expenses', authorizeEvent, (req, res) => {
   const expense = db.addExpense({
     ...req.body,
     event_id: req.params.id
@@ -366,22 +445,20 @@ app.post('/api/events/:id/expenses', (req, res) => {
   res.status(201).json(expense);
 });
 
-app.put('/api/events/:id/expenses/:expenseId', (req, res) => {
+app.put('/api/events/:id/expenses/:expenseId', authorizeEvent, (req, res) => {
   const updated = db.updateExpense(req.params.expenseId, req.body);
   if (!updated) return res.status(404).json({ error: 'Expense not found' });
   res.json(updated);
 });
 
-app.delete('/api/events/:id/expenses/:expenseId', (req, res) => {
+app.delete('/api/events/:id/expenses/:expenseId', authorizeEvent, (req, res) => {
   const ok = db.deleteExpense(req.params.expenseId);
   if (!ok) return res.status(404).json({ error: 'Expense not found' });
   res.json({ success: true });
 });
 
-app.get('/api/events/:id/budget-summary', (req, res) => {
-  const event = db.getEventById(req.params.id);
-  if (!event) return res.status(404).json({ error: 'Event not found' });
-
+app.get('/api/events/:id/budget-summary', authorizeEvent, (req, res) => {
+  const event = req.event;
   const expenses = db.getExpensesByEvent(req.params.id);
   const vendors = db.getVendorsByEvent(req.params.id);
 
@@ -395,9 +472,11 @@ app.get('/api/events/:id/budget-summary', (req, res) => {
   const totalAdvancePaid = vendors.reduce((sum, v) => sum + (Number(v.advance_paid) || 0), 0);
   const totalPendingVendorBalance = Math.max(0, totalAgreedVendorCost - totalAdvancePaid);
 
-  const remainingBudget = totalBudget - totalActual;
-  const utilizationPercentage = totalBudget > 0 ? ((totalActual / totalBudget) * 100).toFixed(1) : 0;
-  const isOverBudget = totalActual > totalBudget || totalEstimated > totalBudget;
+  // Remaining budget: Uses actual spending if recorded, otherwise falls back to estimated commitments
+  const expenseBasis = totalActual > 0 ? totalActual : totalEstimated;
+  const remainingBudget = totalBudget - expenseBasis;
+  const utilizationPercentage = totalBudget > 0 ? Number(((expenseBasis / totalBudget) * 100).toFixed(1)) : 0;
+  const isOverBudget = expenseBasis > totalBudget;
 
   // Category aggregations
   const categoryMap = {};
@@ -442,7 +521,7 @@ app.get('/api/events/:id/budget-summary', (req, res) => {
     totalQuoted,
     totalActual,
     remainingBudget,
-    utilizationPercentage: Number(utilizationPercentage),
+    utilizationPercentage,
     isOverBudget,
     totalPendingVendorBalance,
     totalAgreedVendorCost,
@@ -455,12 +534,12 @@ app.get('/api/events/:id/budget-summary', (req, res) => {
 // ----------------------------------------------------
 // Tasks & Timeline Management
 // ----------------------------------------------------
-app.get('/api/events/:id/tasks', (req, res) => {
+app.get('/api/events/:id/tasks', authorizeEvent, (req, res) => {
   const tasks = db.getTasksByEvent(req.params.id);
   res.json(tasks);
 });
 
-app.post('/api/events/:id/tasks', (req, res) => {
+app.post('/api/events/:id/tasks', authorizeEvent, (req, res) => {
   const task = db.addTask({
     ...req.body,
     event_id: req.params.id
@@ -468,13 +547,13 @@ app.post('/api/events/:id/tasks', (req, res) => {
   res.status(201).json(task);
 });
 
-app.put('/api/events/:id/tasks/:taskId', (req, res) => {
+app.put('/api/events/:id/tasks/:taskId', authorizeEvent, (req, res) => {
   const updated = db.updateTask(req.params.taskId, req.body);
   if (!updated) return res.status(404).json({ error: 'Task not found' });
   res.json(updated);
 });
 
-app.delete('/api/events/:id/tasks/:taskId', (req, res) => {
+app.delete('/api/events/:id/tasks/:taskId', authorizeEvent, (req, res) => {
   const ok = db.deleteTask(req.params.taskId);
   if (!ok) return res.status(404).json({ error: 'Task not found' });
   res.json({ success: true });
@@ -483,12 +562,12 @@ app.delete('/api/events/:id/tasks/:taskId', (req, res) => {
 // ----------------------------------------------------
 // Vendors Management
 // ----------------------------------------------------
-app.get('/api/events/:id/vendors', (req, res) => {
+app.get('/api/events/:id/vendors', authorizeEvent, (req, res) => {
   const vendors = db.getVendorsByEvent(req.params.id);
   res.json(vendors);
 });
 
-app.post('/api/events/:id/vendors', (req, res) => {
+app.post('/api/events/:id/vendors', authorizeEvent, (req, res) => {
   const vendor = db.addVendor({
     ...req.body,
     event_id: req.params.id
@@ -496,13 +575,13 @@ app.post('/api/events/:id/vendors', (req, res) => {
   res.status(201).json(vendor);
 });
 
-app.put('/api/events/:id/vendors/:vendorId', (req, res) => {
+app.put('/api/events/:id/vendors/:vendorId', authorizeEvent, (req, res) => {
   const updated = db.updateVendor(req.params.vendorId, req.body);
   if (!updated) return res.status(404).json({ error: 'Vendor not found' });
   res.json(updated);
 });
 
-app.delete('/api/events/:id/vendors/:vendorId', (req, res) => {
+app.delete('/api/events/:id/vendors/:vendorId', authorizeEvent, (req, res) => {
   const ok = db.deleteVendor(req.params.vendorId);
   if (!ok) return res.status(404).json({ error: 'Vendor not found' });
   res.json({ success: true });
@@ -511,12 +590,12 @@ app.delete('/api/events/:id/vendors/:vendorId', (req, res) => {
 // ----------------------------------------------------
 // Guests & RSVP Management
 // ----------------------------------------------------
-app.get('/api/events/:id/guests', (req, res) => {
+app.get('/api/events/:id/guests', authorizeEvent, (req, res) => {
   const guests = db.getGuestsByEvent(req.params.id);
   res.json(guests);
 });
 
-app.post('/api/events/:id/guests', (req, res) => {
+app.post('/api/events/:id/guests', authorizeEvent, (req, res) => {
   const guest = db.addGuest({
     ...req.body,
     event_id: req.params.id
@@ -524,21 +603,21 @@ app.post('/api/events/:id/guests', (req, res) => {
   res.status(201).json(guest);
 });
 
-app.put('/api/events/:id/guests/:guestId', (req, res) => {
+app.put('/api/events/:id/guests/:guestId', authorizeEvent, (req, res) => {
   const updated = db.updateGuest(req.params.guestId, req.body);
   if (!updated) return res.status(404).json({ error: 'Guest not found' });
   res.json(updated);
 });
 
-app.delete('/api/events/:id/guests/:guestId', (req, res) => {
+app.delete('/api/events/:id/guests/:guestId', authorizeEvent, (req, res) => {
   const ok = db.deleteGuest(req.params.guestId);
   if (!ok) return res.status(404).json({ error: 'Guest not found' });
   res.json({ success: true });
 });
 
-app.get('/api/events/:id/guests/export', (req, res) => {
+app.get('/api/events/:id/guests/export', authorizeEvent, (req, res) => {
   const guests = db.getGuestsByEvent(req.params.id);
-  const event = db.getEventById(req.params.id);
+  const event = req.event;
 
   let csv = 'Name,Group,Invitation Status,RSVP Status,Plus Ones,Total Attendees,Dietary Preferences,Contact Details\n';
   guests.forEach(g => {
@@ -565,12 +644,12 @@ app.get('/api/events/:id/guests/export', (req, res) => {
 // ----------------------------------------------------
 // Saved Ideas
 // ----------------------------------------------------
-app.get('/api/events/:id/ideas', (req, res) => {
+app.get('/api/events/:id/ideas', authorizeEvent, (req, res) => {
   const ideas = db.getSavedIdeasByEvent(req.params.id);
   res.json(ideas);
 });
 
-app.post('/api/events/:id/ideas', (req, res) => {
+app.post('/api/events/:id/ideas', authorizeEvent, (req, res) => {
   const userId = getActiveUserId(req);
   const idea = db.addSavedIdea({
     ...req.body,
@@ -603,10 +682,11 @@ if (fs.existsSync(clientDistPath)) {
   });
 }
 
-// Start Server if run directly (not in a serverless environment like Vercel)
+// Start Server if run directly (not when imported in test suites or serverless)
 const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const isDirectRun = Boolean(process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]));
 
-if (!isServerless) {
+if (!isServerless && process.env.NODE_ENV !== 'test' && isDirectRun) {
   app.listen(PORT, () => {
     console.log(`🚀 EventGenie AI Server running on port ${PORT}`);
     console.log(`🤖 AI Status: ${getAiStatus().mode} (${getAiStatus().model})`);

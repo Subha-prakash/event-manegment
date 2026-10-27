@@ -274,7 +274,7 @@ export const BudgetPage: React.FC = () => {
           </div>
 
           {summary?.categoryBreakdown && summary.categoryBreakdown.length > 0 ? (
-            <div className="h-64 w-full">
+            <div className="h-64 w-full" role="img" aria-label="Category allocation donut chart">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -287,16 +287,34 @@ export const BudgetPage: React.FC = () => {
                     outerRadius={85}
                     paddingAngle={3}
                   >
-                    {summary.categoryBreakdown.map((entry, index) => (
+                    {summary.categoryBreakdown.map((_entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(val: any) => formatCurrency(Number(val))}
+                    formatter={(val: unknown) => formatCurrency(Number(val) || 0)}
                     contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0' }}
                   />
                 </PieChart>
               </ResponsiveContainer>
+              {/* Screen reader data summary */}
+              <table className="sr-only">
+                <caption>Category expense allocations</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Estimated Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {summary.categoryBreakdown.map((cat, i) => (
+                    <tr key={i}>
+                      <td>{cat.category}</td>
+                      <td>{formatCurrency(cat.estimated)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           ) : (
             <div className="text-center py-12 text-xs text-slate-400">No category breakdown data available.</div>
@@ -311,7 +329,7 @@ export const BudgetPage: React.FC = () => {
           </div>
 
           {summary?.categoryBreakdown && summary.categoryBreakdown.length > 0 ? (
-            <div className="h-64 w-full">
+            <div className="h-64 w-full" role="img" aria-label="Cost comparison bar chart for estimated, quoted, and actual spend">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={summary.categoryBreakdown.slice(0, 5).map(c => ({
@@ -325,7 +343,7 @@ export const BudgetPage: React.FC = () => {
                   <XAxis dataKey="name" tick={{ fontSize: 11 }} />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip
-                    formatter={(val: any) => formatCurrency(Number(val))}
+                    formatter={(val: unknown) => formatCurrency(Number(val) || 0)}
                     contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0' }}
                   />
                   <Legend wrapperStyle={{ fontSize: 12, paddingTop: 10 }} />
@@ -334,6 +352,28 @@ export const BudgetPage: React.FC = () => {
                   <Bar dataKey="Actual" fill="#7c3aed" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
+              {/* Screen reader comparison summary */}
+              <table className="sr-only">
+                <caption>Cost comparison for top categories</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Estimated</th>
+                    <th scope="col">Quoted</th>
+                    <th scope="col">Actual</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {summary.categoryBreakdown.slice(0, 5).map((cat, i) => (
+                    <tr key={i}>
+                      <td>{cat.category}</td>
+                      <td>{formatCurrency(cat.estimated)}</td>
+                      <td>{formatCurrency(cat.quoted)}</td>
+                      <td>{formatCurrency(cat.actual)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           ) : (
             <div className="text-center py-12 text-xs text-slate-400">No chart data available.</div>

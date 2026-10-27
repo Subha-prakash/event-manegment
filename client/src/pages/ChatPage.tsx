@@ -82,30 +82,45 @@ export const ChatPage: React.FC = () => {
     }
   };
 
-  const handleApplyAction = async (action: any) => {
+interface ChatSuggestedAction {
+  type: string;
+  data: {
+    category?: string;
+    estimated_saving?: number;
+    title?: string;
+    description?: string;
+    priority?: 'High' | 'Medium' | 'Low';
+    due_date?: string;
+    [key: string]: unknown;
+  };
+}
+
+  const handleApplyAction = async (action: ChatSuggestedAction) => {
     if (!activeEvent) return;
 
     try {
       if (action.type === 'adjust_budget') {
-        const { category, estimated_saving } = action.data;
+        const category = action.data.category || 'Decoration and flowers';
+        const estimatedSaving = Number(action.data.estimated_saving) || 0;
         const expenses = await api.getExpenses(activeEvent.id);
         const decorExpense = expenses.find(e => e.category === category);
         if (decorExpense) {
-          const newEst = Math.max(0, decorExpense.estimated_amount - estimated_saving);
+          const newEst = Math.max(0, decorExpense.estimated_amount - estimatedSaving);
           await api.updateExpense(activeEvent.id, decorExpense.id, {
             estimated_amount: newEst,
-            notes: `Reduced by ${estimated_saving} via AI recommendation`
+            notes: `Reduced by ${estimatedSaving} via AI recommendation`
           });
         }
-        showToast(`Budget adjusted! Saved ${formatCurrency(estimated_saving)} on ${category}`, 'success');
+        showToast(`Budget adjusted! Saved ${formatCurrency(estimatedSaving)} on ${category}`, 'success');
       } else if (action.type === 'add_task') {
         await api.addTask(activeEvent.id, action.data);
         showToast('New task added to preparation timeline!', 'success');
       }
       setPendingAction(null);
       await refreshActiveEvent();
-    } catch (err: any) {
-      showToast(err.message || 'Failed to apply action', 'error');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to apply action';
+      showToast(msg, 'error');
     }
   };
 

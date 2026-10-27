@@ -10,6 +10,11 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server/src/index.js",
     "client": "npm run --prefix client dev",
+    "test": "node --test server/test/*.test.js",
+    "test:unit": "node --test server/test/unit.test.js",
+    "test:integration": "node --test server/test/integration.test.js",
+    "test:client": "npm run --prefix client test",
+    "test:all": "npm run test:client && npm run test",
     "build": "npm install --prefix client && npm run --prefix client build",
     "install:all": "npm install && npm run --prefix client install && npm run --prefix server install"
   },

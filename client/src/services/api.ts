@@ -12,7 +12,7 @@ import {
   PlanData
 } from '../types';
 
-const RAW_BASE_URL = ((import.meta as any).env?.VITE_API_URL as string | undefined) || '/api';
+const RAW_BASE_URL = (import.meta.env?.VITE_API_URL as string | undefined) || '/api';
 const BASE_URL = RAW_BASE_URL.replace(/\/+$/, '');
 
 function getHeaders(): HeadersInit {
@@ -48,11 +48,12 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     }
 
     return res.json();
-  } catch (err: any) {
-    if (!err.message?.includes('Request failed')) {
+  } catch (err: unknown) {
+    const errorMsg = err instanceof Error ? err.message : String(err);
+    if (!errorMsg.includes('Request failed')) {
       console.error(`[API Network Error] ${options.method || 'GET'} ${url}:`, err);
     }
-    throw err;
+    throw err instanceof Error ? err : new Error(errorMsg);
   }
 }
 
@@ -145,7 +146,7 @@ export const api = {
     });
   },
 
-  async regenerateSection(eventId: string, sectionKey: string, instructions?: string): Promise<{ sectionKey: string; data: any; fullPlan: PlanData }> {
+  async regenerateSection(eventId: string, sectionKey: string, instructions?: string): Promise<{ sectionKey: string; data: unknown; fullPlan: PlanData }> {
     return request('/ai/regenerate-section', {
       method: 'POST',
       body: JSON.stringify({ eventId, sectionKey, instructions })
@@ -164,7 +165,7 @@ export const api = {
     return request<AiConversation[]>(`/ai/conversations/${eventId}`);
   },
 
-  async sendChatMessage(eventId: string, message: string): Promise<{ message: AiConversation; suggested_action?: any }> {
+  async sendChatMessage(eventId: string, message: string): Promise<{ message: AiConversation; suggested_action?: { type: string; payload?: unknown } }> {
     return request('/ai/chat', {
       method: 'POST',
       body: JSON.stringify({ eventId, message })

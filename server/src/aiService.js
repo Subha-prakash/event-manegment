@@ -1,4 +1,41 @@
 import { GoogleGenAI } from '@google/genai';
+import { z } from 'zod';
+
+// Strict validation schemas for AI-generated outputs
+export const planDataSchema = z.object({
+  concept_and_theme: z.string().default("Theme and Concept"),
+  decoration_ideas: z.array(z.string()).default([]),
+  venue_requirements: z.array(z.string()).default([]),
+  catering_menu: z.array(z.string()).default([]),
+  entertainment_and_program: z.array(z.string()).default([]),
+  guest_experience: z.array(z.string()).default([]),
+  vendor_checklist: z.array(z.string()).default([]),
+  budget_breakdown: z.array(z.object({
+    category: z.string(),
+    estimated_cost: z.number(),
+    reason: z.string().optional()
+  })).default([]),
+  timeline: z.array(z.object({
+    days_before_event: z.number(),
+    task: z.string(),
+    priority: z.enum(['High', 'Medium', 'Low']).catch('Medium'),
+    description: z.string().optional()
+  })).default([]),
+  essential_reminders: z.array(z.string()).default([]),
+  personalized_ideas: z.array(z.object({
+    title: z.string(),
+    category: z.string(),
+    estimated_cost: z.number(),
+    description: z.string()
+  })).optional()
+});
+
+export const ideasSchema = z.array(z.object({
+  category: z.string().default('Theme'),
+  title: z.string(),
+  description: z.string(),
+  estimated_cost: z.number().default(0)
+}));
 
 // In-memory or env-based API key management
 let currentApiKey = process.env.GEMINI_API_KEY || '';
@@ -267,7 +304,8 @@ Ensure the sum of all estimated_cost in budget_breakdown is as close to total_bu
         // Clean possible markdown wrapper if any
         const cleaned = text.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
         const parsed = JSON.parse(cleaned);
-        return parsed;
+        const validated = planDataSchema.parse(parsed);
+        return validated;
       }
     } catch (err) {
       console.warn("Gemini API call failed, falling back to intelligent planner:", err.message);
@@ -356,7 +394,9 @@ Return ONLY a JSON array of objects:
       const text = response.text?.trim();
       if (text) {
         const cleaned = text.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
-        return JSON.parse(cleaned);
+        const parsed = JSON.parse(cleaned);
+        const validated = ideasSchema.parse(parsed);
+        return validated;
       }
     } catch (err) {
       console.warn("Gemini API idea generation failed, using built-in generator:", err.message);
