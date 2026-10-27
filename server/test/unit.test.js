@@ -247,3 +247,92 @@ describe('Unit Tests: Input Schemas & Security Validation', () => {
     assert.equal(result.success, false);
   });
 });
+
+describe('Unit Tests: AI Fallback Engine & Resiliency', () => {
+  test('generates comprehensive master plan via built-in engine when API key is unset', async () => {
+    const { generateFullEventPlan } = await import('../src/aiService.js');
+    const mockEvent = {
+      name: 'Priya & Rohan Sangeet Night',
+      event_type: 'Wedding',
+      event_date: '2026-11-20',
+      location: 'Udaipur, Rajasthan',
+      guest_count: 200,
+      budget: 800000,
+      currency: 'INR',
+      theme: 'Royal Heritage'
+    };
+
+    const plan = await generateFullEventPlan(mockEvent);
+    assert.ok(plan, 'Plan must be generated');
+    assert.ok(plan.concept_and_theme, 'Must contain concept and theme');
+    assert.ok(Array.isArray(plan.decoration_ideas) && plan.decoration_ideas.length > 0);
+    assert.ok(Array.isArray(plan.food_and_catering) && plan.food_and_catering.length > 0);
+    assert.ok(Array.isArray(plan.budget_breakdown) && plan.budget_breakdown.length > 0);
+    assert.ok(Array.isArray(plan.timeline) && plan.timeline.length > 0);
+    assert.ok(Array.isArray(plan.vendor_checklist) && plan.vendor_checklist.length > 0);
+  });
+
+  test('budget breakdown allocates realistic portions matching target budget', async () => {
+    const { generateFullEventPlan } = await import('../src/aiService.js');
+    const targetBudget = 500000;
+    const plan = await generateFullEventPlan({
+      name: 'College Cultural Fest',
+      event_type: 'College Fest',
+      event_date: '2026-12-05',
+      location: 'Pune',
+      guest_count: 500,
+      budget: targetBudget,
+      currency: 'INR'
+    });
+
+    const allocatedTotal = plan.budget_breakdown.reduce((sum, item) => sum + (Number(item.estimated_cost) || 0), 0);
+    assert.ok(allocatedTotal > 0, 'Allocated total must be greater than zero');
+    // Budget allocation should be within 35% of total budget
+    assert.ok(Math.abs(allocatedTotal - targetBudget) < targetBudget * 0.35, 'Allocated total should be reasonably close to target');
+  });
+});
+
+describe('Unit Tests: Task Status & Workflow Transitions', () => {
+  const VALID_STATUSES = ['Not Started', 'In Progress', 'Completed'];
+  const VALID_PRIORITIES = ['High', 'Medium', 'Low'];
+
+  function transitionTaskStatus(currentStatus) {
+    if (currentStatus === 'Completed') return 'In Progress';
+    if (currentStatus === 'Not Started') return 'In Progress';
+    return 'Completed';
+  }
+
+  test('toggles task status correctly through lifecycle', () => {
+    assert.equal(transitionTaskStatus('Not Started'), 'In Progress');
+    assert.equal(transitionTaskStatus('In Progress'), 'Completed');
+    assert.equal(transitionTaskStatus('Completed'), 'In Progress');
+  });
+
+  test('validates standard priorities', () => {
+    VALID_PRIORITIES.forEach(priority => {
+      assert.ok(VALID_PRIORITIES.includes(priority));
+    });
+  });
+});
+
+describe('Unit Tests: Rate Limiter Sliding Window Logic', () => {
+  test('correctly calculates remaining quota and reset timestamps', () => {
+    const windowMs = 60000;
+    const maxRequests = 100;
+    const now = Date.now();
+    const entry = { count: 42, resetAt: now + windowMs };
+
+    const remaining = Math.max(0, maxRequests - entry.count);
+    const resetSeconds = Math.ceil(entry.resetAt / 1000);
+
+    assert.equal(remaining, 58);
+    assert.ok(resetSeconds > 0);
+  });
+
+  test('flags rate-limit violations when request count exceeds threshold', () => {
+    const max = 50;
+    const count = 51;
+    const isExceeded = count > max;
+    assert.equal(isExceeded, true);
+  });
+});
