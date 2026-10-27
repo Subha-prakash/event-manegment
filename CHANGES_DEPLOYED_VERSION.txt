@@ -1,9 +1,0 @@
-The deployed version of EventGenie AI delivers production enhancements:
-
-1. Luxury UI & Accessibility: Implemented a responsive split-screen authentication design with feature spotlights, subtle micro-interactions, WCAG 2.2 AA tabular data alternatives for Recharts graphs, and prefers-reduced-motion support.
-
-2. Enterprise Security: Enforced multi-tenant ownership middleware (403 Forbidden on cross-tenant access), sliding-window rate limiters on AI and auth routes, and OWASP security headers (CSP, X-Frame-Options, nosniff). Gemini API keys remain strictly on the backend.
-
-3. GenAI Engine & Reliability: Integrated Gemini 3.8 Flash with runtime Zod output validation for structured master plans, selective section regeneration without erasing saved plans, and offline fallback synthesis.
-
-4. Deterministic Budgeting & QA: Refined multi-currency financial math factoring commitments vs actuals, backed by 31 automated unit and integration tests (100% pass).
